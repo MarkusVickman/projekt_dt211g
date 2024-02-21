@@ -1,0 +1,9 @@
+{
+    "jpeg": {
+        "quality": 70  
+    },
+    "webp": {
+        "quality": 55
+    }
+    
+}
