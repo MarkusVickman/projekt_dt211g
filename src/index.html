@@ -1,26 +1,88 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search A Game</title>
-        <!--Länk till scss-fil-->
-        <link rel="stylesheet" href="scss/main.scss">
-        <!--Länk till javascript mobilmeny-->
-        <script type="module" src="js/igdb.js"></script>
-        <!--Favicon-->
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?ver=2.0">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-        <!--Typsnitt inter-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    </head>
-<header>
-    <img src="img/logo.png" id="logo">
-</header>
+    <!--Länk till scss-fil-->
+    <link rel="stylesheet" href="scss/main.scss">
+    <!--Länk till javascript mobilmeny-->
+    <script type="module" src="js/igdb.js"></script>
+    <!--Favicon-->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?ver=2.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <!--Typsnitt inter-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
 <body>
-    <H1>Search A Game</H1>
-    <div id="info"></div>
+    <header>
+        <img src="img/logo.png" id="logo" alt="logotyp">
+    </header>
+    <main>
+        <H1>Sök antagningsstatistik</H1>
+        <div id="info"></div>
+
+        <div>
+            <label for="term" class="input">Välj termin</label>
+            <select id="term" name="term">
+                <option value="vt24">Vår 24</option>
+                <option value="ht23">Höst 23</option>
+                <option value="vt23">Vår 23</option>
+                <option value="ht22">Höst 22</option>
+                <option value="vt22">Vår 22</option>
+                <option value="ht21">Höst 21</option>
+                <option value="vt21">Vår 21</option>
+                <option value="ht20">Höst 20</option>
+                <option value="vt20">Vår 20</option>
+                <option value="ht19">Höst 19</option>
+                <option value="vt19">Vår 19</option>
+                <option value="ht18">Höst 19</option>
+                <option value="vt18">Vår 18</option>
+                <option value="ht17">Höst 18</option>
+                <option value="vt17">Vår 17</option>
+                <option value="ht16">Höst 17</option>
+                <option value="vt15">Vår 16</option>
+                <option value="ht15">Höst 16</option>
+                <option value="vt14">Vår 15</option>
+                <option value="ht14">Höst 15</option>
+            </select>
+
+            <button id="chooseterm">Välj</button>
+        </div>
+
+
+
+        <label for="name">Sökord</label>
+        <input type="text" id="name" name="name" placeholder="Sökord">
+
+        <label for="type" class="input">Sök efter</label>
+        <select id="type" name="type">
+            <option value="lärosäte">Lärosäte</option>
+            <option value="ämnesgrupp">Ämne</option>
+        </select>
+
+
+        <label for="distans" class="input">Distans eller inte</label>
+        <select id="distans" name="distans">
+            <option value="studieort">Distans</option>
+            <option value="test">På plats</option>
+        </select>
+
+        <label for="course-or-program" class="input">Kurs eller program</label>
+        <select id="course-or-program" name="course-or-program">
+            <option value="programid">Program</option>
+            <option value="kursid">Kurs</option>
+        </select>
+        <button>Sök</button>
+
+        <div>
+            list data
+        </div>
+    </main>
 </body>
+
 </html>
