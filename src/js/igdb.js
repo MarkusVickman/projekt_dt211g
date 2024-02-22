@@ -17,26 +17,57 @@ searchBtn.addEventListener("click", function (e) {
 
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
 chooseTerm.addEventListener("click", function (e) {
-    let termin = document.getElementById("term").value;
-    fetchData(termin);
+    //let termin = document.getElementById("term").value;
+    fetchData();
 })
 
 /* En asynkron funktion som väntar på datan som hämtas som array av object med fetch api. Hämtar data med hjälp av nominatim sökfunktion och använder sökordet från sidan*/
-async function fetchData(termin) {
+/*async function fetchData(termin) {
     try {
-        const response = await fetch(`https://www.uhr.se/api/antagningsstatistik/searchTotal?searchfor=&searchterm=${termin}&pagesize=30000`);
+        const response = curl -X "https://api.skolverket.se/planned-educations/v3/compact-school-units?coordinateSystemType=WGS84&page=0&size=20" -H "accept: application/vnd.skolverket.plannededucations.api.v3.hal+json";
         let data = await response.json();
         filterStatistics(data);
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;
     }
-}
+}*/
 
+    /*curl -X GET https://api.skolverket.se/planned-educations/v3/compact-school-units?coordinateSystemType=WGS84&page=0&size=20
+    -H "accept: application/vnd.skolverket.plannededucations.api.v3.hal+json";*/
+
+    // Example POST method implementation:
+async function fetchData(url ="https://api.skolverket.se/planned-educations/v3/adult-education-events", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "no-cors", // no-cors, *cors, same-origin
+      cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/vnd.skolverket.plannededucations.api.v3.hal+json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+    });
+    //return response.json(); // parses JSON response into native JavaScript objects
+    console.log(response);
+
+    console.log(data);
+  }
+  /*
+  postData("https://example.com/answer", { answer: 42 }).then((data) => {
+    console.log(data); // JSON data parsed by `data.json()` call
+  });*/
+
+
+/*
 function filterStatistics(data){
     console.log(data);
 }
-
+*/
 
 
 /* En asynkron funktion som väntar på datan som hämtas som array av object med fetch api. Hämtar data med hjälp av nominatim sökfunktion och använder sökordet från sidan
