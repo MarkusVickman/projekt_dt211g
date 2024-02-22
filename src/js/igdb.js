@@ -8,11 +8,11 @@
 let searchBtn = document.getElementById("searchbtn");
 let chooseTerm = document.getElementById("chooseterm");
 
-//vid click på sökknapp samlas input in och skickas vidare till.
+/*vid click på sökknapp samlas input in och skickas vidare till.
 searchBtn.addEventListener("click", function (e) {
     let search = document.getElementById("searchinput").value;
     fetchData(search);
-})
+})*/
 
 
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
@@ -23,18 +23,19 @@ chooseTerm.addEventListener("click", function (e) {
 
 /* En asynkron funktion som väntar på datan som hämtas som array av object med fetch api. Hämtar data med hjälp av nominatim sökfunktion och använder sökordet från sidan*/
 async function fetchData(termin) {
-    try {
+    /*try {
         const response = await fetch(`https://www.uhr.se/api/antagningsstatistik/searchTotal?searchfor=&searchterm=${termin}&pagesize=30000`);
         let data = await response.json();
         filterStatistics(data);
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;
-    }
+    }*/
+    console.log(termin);
 }
 
 function filterStatistics(data){
-    
+    console.log(data);
 }
 
 
