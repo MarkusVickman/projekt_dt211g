@@ -23,15 +23,14 @@ chooseTerm.addEventListener("click", function (e) {
 
 /* En asynkron funktion som väntar på datan som hämtas som array av object med fetch api. Hämtar data med hjälp av nominatim sökfunktion och använder sökordet från sidan*/
 async function fetchData(termin) {
-    /*try {
+    try {
         const response = await fetch(`https://www.uhr.se/api/antagningsstatistik/searchTotal?searchfor=&searchterm=${termin}&pagesize=30000`);
         let data = await response.json();
         filterStatistics(data);
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;
-    }*/
-    console.log(termin);
+    }
 }
 
 function filterStatistics(data){
