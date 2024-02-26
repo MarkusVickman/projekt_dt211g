@@ -11,14 +11,15 @@ chooseTerm.addEventListener("click", function (e) {
   steam();
 })
 
-
+import { okey } from "./start";
+const okej = okey();
 
 async function steam() {
   const url = 'https://steam-store-data.p.rapidapi.com/api/featuredcategories/';
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'e',
+      'X-RapidAPI-Key': okej,
       'X-RapidAPI-Host': 'steam-store-data.p.rapidapi.com'
     }
   };
@@ -28,10 +29,15 @@ async function steam() {
     const result = await response.json();
     console.log(result);
     review(result);
+    buildPage(result);
   } catch (error) {
     console.error(error);
   }
 
+}
+
+function buildPage(){
+  
 }
 
 async function review(games) {
@@ -42,7 +48,7 @@ async function review(games) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'e',
+      'X-RapidAPI-Key': okej,
       'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
     }
   };
@@ -51,7 +57,7 @@ async function review(games) {
     const response = await fetch(url, options);
     const result = await response.json();
     let review = result[0].id;
-    reviewThis(review);
+    //reviewThis(review);
   } catch (error) {
     console.error(error);
   }
@@ -64,7 +70,7 @@ async function reviewThis(review) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'e',
+      'X-RapidAPI-Key': okej,
       'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
     }
   };
