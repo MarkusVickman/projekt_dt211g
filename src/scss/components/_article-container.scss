@@ -19,6 +19,12 @@
     max-width: 100%;
 }
 
+.article-container img{
+    width: 250px;
+    max-width: 100%;
+    margin-top: -20px;
+}
+
 .article-h3{
     position: relative;
     top: 315px;
@@ -43,7 +49,7 @@
 @media screen and (min-width: 2049px) {
     .article-container{
         display: inline-block;
-        margin-left: 80px;
+        margin-left: 85px;
         border-width: 20px 20px 60px 20px;
     }
 
