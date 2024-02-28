@@ -1,23 +1,29 @@
 
 
 let searchBtn = document.getElementById("searchbtn");
-let chooseTerm = document.getElementById("chooseterm");
+let topList = document.getElementById("toplist");
 let picturesEl = document.getElementById("pictures");
 let buildReview = document.getElementById("review");
-let buildFeatured = document.getElementById("toplist");
+let saleEl = document.getElementById("sale");
 let build = document.getElementById("");
 
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
-chooseTerm.addEventListener("click", function (e) {
+topList.addEventListener("click", function (e) {
+  urlTop = 'https://steam-store-data.p.rapidapi.com/api/featuredcategories/';
+  steam("top_sellers", urlTop);
+})
 
-  steam();
+//vid click på sökknapp samlas input in och skickas vidare till apilänken
+sale.addEventListener("click", function (e) {
+
+  steam("specials", url);
 })
 
 import { okey } from "./start";
 const okej = okey();
 
-async function steam() {
-  const url = 'https://steam-store-data.p.rapidapi.com/api/featuredcategories/';
+async function steam(name, urlApi) {
+  const url = urlApi;
   const options = {
     method: 'GET',
     headers: {
@@ -38,24 +44,28 @@ async function steam() {
 
 }
 
-function buildPage(top) {
+function buildPage(data) {
   let steamDeck = "";
-  for (let i = 0; i < (top.top_sellers.items.length); i++) {
+  for (let i = 0; i < (data.top_sellers.items.length); i++) {
 
-    if (top.top_sellers.items[i].name !== "Steam Deck") {
-      builder(i, top);
+    if (data.top_sellers.items[i].name !== "Steam Deck") {
+      let objectID = data.top_sellers.items[i];
+      builder(objectID);
+
     } else {
       steamDeck = "yes";
       index = i;
     }
   }
   if (steamDeck === "yes") {
-    builder(index, top);
+    let objectID = data.top_sellers.items[index];
+    builder(objectID);
   }
 };
 
-function builder(i, top) {
-  let gameHeader = document.createTextNode(top.top_sellers.items[i].name);
+
+function builder(objectID) {
+  let gameHeader = document.createTextNode(objectID.name);
   //let text = document.createTextNode(top.top_sellers.items[i].large_capsule_image);
   let h3 = document.createElement("H3");
   h3.classList.add("article-h3");
@@ -68,16 +78,20 @@ function builder(i, top) {
   // p.classList.add("article-top-text");
 
   let img = document.createElement("img");
-  img.src = top.top_sellers.items[i].large_capsule_image;
-
+  img.src = objectID.large_capsule_image;
 
   h3.appendChild(gameHeader);
-  container.appendChild(h3);
   container.appendChild(img);
-  buildReview.appendChild(container);
+
+  article.appendChild(container);
+  article.appendChild(h3);
+  buildReview.appendChild(article);
 
 
-  buildReview.title = top.top_sellers.items[i].id;
+
+  
+
+  container.title = objectID.id;
 }
 
 

@@ -6,51 +6,61 @@
 }
 
 .article-container{
-    border-width: 10px 10px 60px 10px;
+    border-width: 10px 10px 80px 10px;
     border-style: solid;
     border-color: white;
     width: 250px;
     height: 300px;
-    text-align: center;
+    text-align: left;
     background-color: rgba(227, 242, 247, 0.9);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    max-width: 100%;
+    overflow: scroll;
 }
 
 .article-container img{
     width: 250px;
     max-width: 100%;
-    margin-top: -20px;
 }
 
 .article-h3{
     position: relative;
-    top: 315px;
+    top: -70px;
+
 }
 
-.article-top-text{
-    margin-top: -20px;
-}
 .article{
-    text-align: left;
+    text-align: center;
+    width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    max-width: 100%;
+    //clear: left;
 }
 
 @media screen and (min-width: 800px) and (max-width: 2048px) {
     .article-container{
-        display: inline-block;
+
+        border-width: 20px 20px 80px 20px;
+    }
+
+    .article{   
         margin-left: 50px;
-        border-width: 20px 20px 60px 20px;
+        //display: inline-block;
+        float: right;
     }
 
 }
 
 @media screen and (min-width: 2049px) {
     .article-container{
-        display: inline-block;
+
+        border-width: 20px 20px 80px 20px;
+    }
+
+    .article{   
         margin-left: 85px;
-        border-width: 20px 20px 60px 20px;
+        //display: inline-block;
+        float: right;
     }
 
 }
