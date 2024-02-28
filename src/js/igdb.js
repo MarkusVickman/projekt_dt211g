@@ -63,7 +63,6 @@ async function steam(category) {
   } catch (error) {
     console.error(error);
   }
-
 }
 
 function buildTopList(data) {
@@ -128,9 +127,19 @@ function buildComingSoon(data) {
   for (let i = 0; i < (data.coming_soon.items.length); i++) {
       let objectID = data.coming_soon.items[i];
       builder(objectID);
-
   }
+
+  //allGameId();
+
 };
+
+let containerClass = document.getElementsByClassName("article-container");
+/*
+function allGameId(){
+  for (let i = 0; i < containerClass.length; i++) {
+    gameId(containerClass[i].title);
+  }
+}*/
 
 
 function builder(objectID) {
@@ -138,9 +147,9 @@ function builder(objectID) {
   let gameHeader = document.createTextNode(objectID.name);
   //let text = document.createTextNode(top.top_sellers.items[i].large_capsule_image);
   let h3 = document.createElement("H3");
-  h3.classList.add("article-h3");
+  h3.classList.add("article-h3", "biginfo");
   let container = document.createElement("article");
-  container.classList.add("article-container");
+  container.classList.add("article-container", "biginfo");
 
   let article = document.createElement("div");
   article.classList.add("article");
@@ -149,6 +158,8 @@ function builder(objectID) {
 
   let img = document.createElement("img");
   img.src = objectID.large_capsule_image;
+  img.classList.add("biginfo");
+ 
 
   h3.appendChild(gameHeader);
   container.appendChild(img);
@@ -157,9 +168,72 @@ function builder(objectID) {
   article.appendChild(h3);
   buildReview.appendChild(article);
 
+  img.title = objectID.id;
+  h3.title = objectID.id;
   container.title = objectID.id;
-}
 
+
+}
+/*
+async function gameId(game){
+  const url = `https://steam-api7.p.rapidapi.com/appDetails/${game}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': okej,
+      'X-RapidAPI-Host': 'steam-api7.p.rapidapi.com'
+    }
+  };
+  
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+    addGameInfo(result);
+  } catch (error) {
+    console.error(error);
+  }
+}*/
+/*
+function addGameInfo(data){
+  console.log("är jag i näst sista funktionen?");
+  for (let i = 0; i < containerClass.length; i++) {
+
+    if(containerClass[i].title === data.steam_appid){
+      setTimeout(function () {
+      let text = document.createTextNode(data.short_description);
+      let link = document.createTextNode(data.website);
+      link.href = data.website;
+      
+      containerClass[i].appendChild(text);
+      containerClass[i].appendChild(link);
+    }, 5000);
+    }
+  }
+}*/
+
+/*
+function addGameInfo(data, container){
+  let text = document.createTextNode(data.short_description);
+  let link = document.createTextNode(data.website);
+  link.href = data.website;
+  
+
+  container.appendChild(text);
+  container.appendChild(link);
+
+}
+*/
+
+const main = document.getElementById("main");
+
+//eventlistener för hela main-innehållet
+main.addEventListener("click", function (e) {
+ 
+  if (e.target.classList.contains('biginfo')) {
+      alert(e.target.title);
+  }
+})
 
 async function review(games) {
   let game = games.top_sellers.items[1].name;
