@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 
 let searchReview = document.getElementById("searchreview");
 let topList = document.getElementById("toplist");
@@ -7,9 +7,17 @@ let buildReview = document.getElementById("review");
 let saleEl = document.getElementById("sale");
 let newReleases = document.getElementById("newreleases");
 
+/*
+import { okey } from "./start";
+const okej = okey();*/
+
+console.log(process.env.USE_THIS);
+
+
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
 topList.addEventListener("click", function (e) {
   steam("top_sellers");
+  console.log(okej);
 })
 
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
@@ -27,15 +35,13 @@ comingSoon.addEventListener("click", function (e) {
   steam("comingSoon");
 })
 
-import { okey } from "./start";
-const okej = okey();
 
 async function steam(category) {
   const url = 'https://steam-store-data.p.rapidapi.com/api/featuredcategories/';
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': okej,
+      'X-RapidAPI-Key': process.env.USE_THIS,
       'X-RapidAPI-Host': 'steam-store-data.p.rapidapi.com'
     }
   };
@@ -243,7 +249,7 @@ async function review(games) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': okej,
+      'X-RapidAPI-Key': process.env.USE_THIS,
       'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
     }
   };
@@ -265,7 +271,7 @@ async function reviewThis(review) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': okej,
+      'X-RapidAPI-Key': process.env.USE_THIS,
       'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
     }
   };
