@@ -1,26 +1,128 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search A Game</title>
-        <!--Länk till scss-fil-->
-        <link rel="stylesheet" href="scss/main.scss">
-        <!--Länk till javascript mobilmeny-->
-        <!--<script type="module" src="js/mobile_menu.js"></script>-->
-        <!--Favicon-->
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?ver=2.0">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-        <!--Typsnitt inter-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!--Länk till scss-fil-->
+    <link rel="stylesheet" href="scss/main.scss">
+    <!--Länk till javascript mobilmeny-->
+    <script type="module" src="js/igdb.js"></script>
+    <!--Favicon-->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?ver=2.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <!--Typsnitt inter-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<header>
-    <img src="img/logo.png" id="logo">
-</header>
+
 <body>
-    <H1>Search A Game</H1>
-    
+    <div class="background-container">
+        <div class="background-img"></div>
+    </div>
+    <!--<div class="background-container">
+        <picture>
+            <source type="image/jpg" media="(max-width: 1024px)" srcset="img/4096x4096.png">
+            <source type="image/jpg" media="(min-width: 1025px) and (max-width: 2048px)" srcset="img/4096x4096.png">
+            <source type="image/jpg" media="(min-width: 2049px)" srcset="img/4096x4096.png">
+            <img src="img/4096x4096.png" class="background-img" alt="Bakgrundsbild med futuristiskt datorspelstema.">
+        </picture>
+    </div>-->
+    <header>
+        <img src="img/logo_test.png" id="logo" alt="logotyp">
+    </header>
+    <main id="main">
+        <H1>Game Trends</H1>
+        <button id="toplist" class="button">Bästsäljande</button>
+        <button id="sale" class="button">Specialerbjudanden</button>
+        <button id="newreleases" class="button">Nyligen släppta</button>
+        <button id="comingsoon" class="button">Kommer snart</button>
+        </div>
+        <div id="review">
+         <!--   <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>
+            <div class="article-container">
+                <h3 class="article-h3">Destiny</h3>
+                <div class="article">
+                    <p class="article-top-text">Spelet var jättebra bra brabra . afsfg sdgoksdg dopfgs.</p>
+                    <p>Betyg: 10 av 10.</p>
+                    <a href=#>Recentionslänk</a>
+                </div>
+            </div>-->
+        </div>
+    </main>
 </body>
+
 </html>

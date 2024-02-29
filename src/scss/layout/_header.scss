@@ -1,13 +1,19 @@
 
 #logo{
     position: absolute;
-    top:0;
-    height: 200px;
-    background-color: white;
+    top:10;
+    height: 80px;
     transform: translate(-50%);
     margin-left: 50%;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+#logo:hover{
+    top:0;
+    height: 100px;
 }
 
 header{
-    height: 200px;
+    height: 100px;
+    background: #09294c;
 }
