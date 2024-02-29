@@ -1,118 +1,94 @@
-
-let searchReview = document.getElementById("searchreview");
-let egsSale = document.getElementById("egs-sale");
-let egsComingSoon = document.getElementById("comingsoon");
+"use strict"
+//let searchReview = document.getElementById("searchreview");
 let buildReview = document.getElementById("review");
-let freeEl = document.getElementById("free");
-let newReleases = document.getElementById("newreleases");
-
+let bigReview = document.getElementById("big-review");
+let checkIfOpen = 0;
+let thisId;
+let closeByBackground = document.getElementById("big-article-background");
 
 import { okey } from "./start";
 const okej = okey();
 
+body.addEventListener("click", function (e) {
 
+  if (e.target.classList.contains('biginfo') && checkIfOpen === 0) {
+    thisId = document.getElementById(e.target.title);
+    thisId.style.display = "block";
+    closeByBackground.style.display = "block";
+    checkIfOpen = 1;
+    //review(thisId);
+  }
 
-//vid click på sökknapp samlas input in och skickas vidare till apilänken
-egsSale.addEventListener("click", function (e) {
-  //steam("top_sellers");
-  egsSaleApi();
+  if (e.target.classList.contains('close-by-button') || e.target.id === "big-article-background") {
+    thisId.style.display = "none";
+    closeByBackground.style.display = "none";
+    checkIfOpen = 0;
+  }
+
+  if (e.target.id === "egs-sale") {
+    bigReview.innerHTML = "";
+    buildReview.innerHTML = "";
+    egsSaleApi("Epic Games Rea", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
+  }
+
+  if (e.target.id === "comingsoon") {
+    bigReview.innerHTML = "";
+    buildReview.innerHTML = "";
+    egsSaleApi("Epic Games Kommande Spel", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
+  }
+
+  if (e.target.id === "free") {
+    bigReview.innerHTML = "";
+    buildReview.innerHTML = "";
+    egsSaleApi("Epic Gratis Spel och kommande gratis spel", 'https://free-epic-games.p.rapidapi.com/free', 'free-epic-games.p.rapidapi.com');
+  }
 })
 
-//vid click på sökknapp samlas input in och skickas vidare till apilänken
-freeEl.addEventListener("click", function (e) {
-  //steam("specials");
-  egsFreeGamesApi();
-})
-
-//vid click på sökknapp samlas input in och skickas vidare till apilänken
-newReleases.addEventListener("click", function (e) {
-  steam("newReleases");
-})
-
-//vid click på sökknapp samlas input in och skickas vidare till apilänken
-egsComingSoon.addEventListener("click", function (e) {
-  //steam("comingSoon");
-  egsComingSoonApi();
-})
-
-async function egsFreeGamesApi() {
-
-  const url = 'https://free-epic-games.p.rapidapi.com/free';
+async function egsSaleApi(header, url, host) {
   const options = {
     method: 'GET',
     headers: {
       'X-RapidAPI-Key': okej,
-      'X-RapidAPI-Host': 'free-epic-games.p.rapidapi.com'
+      'X-RapidAPI-Host': host
     }
   };
-  
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
+    buildEgs(result, header);
   } catch (error) {
     console.error(error);
   }
 }
 
-async function egsSaleApi() {
-
-  const url = 'https://epic-store-games.p.rapidapi.com/onSale?&locale=sv&country=sv';
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': okej,
-      'X-RapidAPI-Host': 'epic-store-games.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
-    buildEgs(result);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function egsComingSoonApi() {
-  const url = 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv';
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': okej,
-      'X-RapidAPI-Host': 'epic-store-games.p.rapidapi.com'
-    }
-  };
-  
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
-    buildEgs(result);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-
-function buildEgs(data) {
-
-  let text = document.createTextNode("Epic Games Rea");
+function buildEgs(data, header) {
+  let text = document.createTextNode(header);
   let h2 = document.createElement("H2");
   h2.appendChild(text);
   buildReview.appendChild(h2);
-
-  for (let i = 0; i < (data.length); i++) {
-    let objectID = data[i];
-    builder(objectID);
-    fullscreenDiv(objectID);
+  if (header === "Epic Games Rea" || header === "Epic Games Kommande Spel") {
+    for (let i = 0; i < (data.length); i++) {
+      let objectID = data[i];
+      builder(objectID);
+      fullscreenDiv(objectID);
+    }
   }
+  else if (header === "Epic Gratis Spel och kommande gratis spel") {
+    for (let i = 0; i < (data.freeGames.current.length); i++) {
+      let objectID = data.freeGames.current[i];
+      builder(objectID);
+      fullscreenDiv(objectID);
+    }
+    for (let i = 0; i < (data.freeGames.upcoming.length); i++) {
+      let objectID = data.freeGames.upcoming[i];
+      builder(objectID);
+      fullscreenDiv(objectID);
+    }
+  }
+
 };
 
 function builder(objectID) {
-
   let gameHeader = document.createTextNode(objectID.title);
   //let text = document.createTextNode(top.top_sellers.items[i].large_capsule_image);
   let h3 = document.createElement("H3");
@@ -128,17 +104,14 @@ function builder(objectID) {
   let img = document.createElement("img");
 
   for (let i = 0; i < (objectID.keyImages.length); i++) {
-    if (objectID.keyImages[i].type === "OfferImageWide"){
+    if (objectID.keyImages[i].type === "OfferImageWide") {
       img.src = objectID.keyImages[i].url;
     }
   }
-
   img.classList.add("biginfo");
-
 
   h3.appendChild(gameHeader);
   container.appendChild(img);
-
 
   article.appendChild(container);
   article.appendChild(h3);
@@ -157,7 +130,7 @@ function fullscreenDiv(objectID) {
   bigArticle.style.display = "none";
 
   for (let i = 0; i < (objectID.keyImages.length); i++) {
-    if (objectID.keyImages[i].type === "OfferImageWide"){
+    if (objectID.keyImages[i].type === "OfferImageWide") {
       img.src = objectID.keyImages[i].url;
     }
   }
@@ -166,16 +139,19 @@ function fullscreenDiv(objectID) {
   let text = document.createElement("p");
   text.appendChild(gameDescription);
 
-
-
-  let gameUrl = document.createTextNode("länk till " + objectID.title);
+  let gameUrl = document.createTextNode("Länk till " + objectID.title);
   let textUrl = document.createElement("a");
 
   textUrl.appendChild(gameUrl);
   textUrl.setAttribute("href", objectID.url);
   //textUrl.textContent = "länk till " + objectID.title;
 
+  let closeBtn = document.createElement("button");
+  let buttonText = document.createTextNode("Stäng");
+  closeBtn.appendChild(buttonText);
+  closeBtn.classList.add("close-by-button", "button");
 
+  bigArticle.appendChild(closeBtn);
   bigArticle.id = objectID.title;
   bigArticle.classList.add("big-article");
   //bigArticle.style.display = "none";
@@ -184,26 +160,8 @@ function fullscreenDiv(objectID) {
   bigArticle.appendChild(img);
   bigArticle.appendChild(text);
   bigArticle.appendChild(textUrl);
-  buildReview.appendChild(bigArticle);
+  bigReview.appendChild(bigArticle);
 }
-
-const main = document.getElementById("main");
-
-
-
-//eventlistener för hela main-innehållet
-main.addEventListener("click", function (e) {
-  let thisId;
-  if (e.target.classList.contains('biginfo')) {
-    thisId = document.getElementById(e.target.title);
-        thisId.style.display = "block";
-        //review(thisId);
-  }
-
-  else if (e.target.classList.contains('big-article')) {
-        thisId.style.display = "none";
-  }
-})
 
 async function review(games) {
   let game = games.top_sellers.items[1].name;
@@ -228,8 +186,6 @@ async function review(games) {
   }
 }
 
-//let listHere = document.getElementById("review"); 
-
 async function reviewThis(review) {
   const url = `https://opencritic-api.p.rapidapi.com/reviews/game/${review}?sort=newest`;
   const options = {
@@ -252,208 +208,3 @@ async function reviewThis(review) {
     console.error(error);
   }
 }
-
-
-
-/*
-function builder(objectID) {
-
-  let gameHeader = document.createTextNode(objectID.name);
-  //let text = document.createTextNode(top.top_sellers.items[i].large_capsule_image);
-  let h3 = document.createElement("H3");
-  h3.classList.add("article-h3", "biginfo");
-  let container = document.createElement("article");
-  container.classList.add("article-container", "biginfo");
-
-  let article = document.createElement("div");
-  article.classList.add("article");
-  //let p = document.createElement("p");
-  // p.classList.add("article-top-text");
-
-  let img = document.createElement("img");
-  img.src = objectID.large_capsule_image;
-  img.classList.add("biginfo");
-
-
-  h3.appendChild(gameHeader);
-  container.appendChild(img);
-
-  article.appendChild(container);
-  article.appendChild(h3);
-  buildReview.appendChild(article);
-
-  img.title = objectID.id;
-  h3.title = objectID.id;
-  container.title = objectID.id;
-
-
-}*/
-
-
-/*
-async function steam(category) {
-  const url = 'https://steam-store-data.p.rapidapi.com/api/featuredcategories/';
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': process.env.USE_THIS,
-      'X-RapidAPI-Host': 'steam-store-data.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
-    //review(result);
-    if (category === "top_sellers") {
-      buildTopList(result);
-    }
-    else if (category === "specials") {
-      buildSpecials(result);
-    }
-
-    else if (category === "comingSoon") {
-      buildComingSoon(result);
-    }
-
-    else if (category === "newReleases") {
-      buildNewReleases(result);
-    }
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-
-function buildTopList(data) {
-
-  let steamDeck = "";
-
-  let text = document.createTextNode(data.top_sellers.name);
-  let h2 = document.createElement("H2");
-  h2.appendChild(text);
-  buildReview.appendChild(h2);
-
-  for (let i = 0; i < (data.top_sellers.items.length); i++) {
-
-    if (data.top_sellers.items[i].name !== "Steam Deck") {
-      let objectID = data.top_sellers.items[i];
-      builder(objectID);
-
-    } else {
-      steamDeck = "yes";
-      index = i;
-    }
-  }
-  if (steamDeck === "yes") {
-    let objectID = data.top_sellers.items[index];
-    builder(objectID);
-  }
-};
-
-function buildSpecials(data) {
-
-  let text = document.createTextNode(data.specials.name);
-  let h2 = document.createElement("H2");
-  h2.appendChild(text);
-  buildReview.appendChild(h2);
-
-  for (let i = 0; i < (data.specials.items.length); i++) {
-    let objectID = data.specials.items[i];
-    builder(objectID);
-  }
-};
-
-function buildNewReleases(data) {
-
-  let text = document.createTextNode(data.new_releases.name);
-  let h2 = document.createElement("H2");
-  h2.appendChild(text);
-  buildReview.appendChild(h2);
-
-  for (let i = 0; i < (data.new_releases.items.length); i++) {
-    let objectID = data.new_releases.items[i];
-    builder(objectID);
-  }
-};
-
-function buildComingSoon(data) {
-
-  let text = document.createTextNode(data.coming_soon.name);
-  let h2 = document.createElement("H2");
-  h2.appendChild(text);
-  buildReview.appendChild(h2);
-
-  for (let i = 0; i < (data.coming_soon.items.length); i++) {
-    let objectID = data.coming_soon.items[i];
-    builder(objectID);
-  }
-
-  //allGameId();
-
-};
-
-let containerClass = document.getElementsByClassName("article-container");
-/*
-function allGameId(){
-  for (let i = 0; i < containerClass.length; i++) {
-    gameId(containerClass[i].title);
-  }
-}*/
-
-
-
-
-/*
-async function gameId(game){
-  const url = `https://steam-api7.p.rapidapi.com/appDetails/${game}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': okej,
-      'X-RapidAPI-Host': 'steam-api7.p.rapidapi.com'
-    }
-  };
-  
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
-    addGameInfo(result);
-  } catch (error) {
-    console.error(error);
-  }
-}*/
-/*
-function addGameInfo(data){
-  console.log("är jag i näst sista funktionen?");
-  for (let i = 0; i < containerClass.length; i++) {
-
-    if(containerClass[i].title === data.steam_appid){
-      setTimeout(function () {
-      let text = document.createTextNode(data.short_description);
-      let link = document.createTextNode(data.website);
-      link.href = data.website;
-      
-      containerClass[i].appendChild(text);
-      containerClass[i].appendChild(link);
-    }, 5000);
-    }
-  }
-}*/
-
-/*
-function addGameInfo(data, container){
-  let text = document.createTextNode(data.short_description);
-  let link = document.createTextNode(data.website);
-  link.href = data.website;
-  
-
-  container.appendChild(text);
-  container.appendChild(link);
-
-}
-*/
-
