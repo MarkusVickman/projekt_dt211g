@@ -5,7 +5,6 @@ let egsComingSoon = document.getElementById("comingsoon");
 let buildReview = document.getElementById("review");
 let freeEl = document.getElementById("free");
 let newReleases = document.getElementById("newreleases");
-let testBtn = document.getElementById("testbtn");
 
 
 import { okey } from "./start";
@@ -34,12 +33,6 @@ newReleases.addEventListener("click", function (e) {
 egsComingSoon.addEventListener("click", function (e) {
   //steam("comingSoon");
   egsComingSoonApi();
-})
-
-
-//vid click på sökknapp samlas input in och skickas vidare till apilänken
-testBtn.addEventListener("click", function (e) {
-  egs();
 })
 
 async function egsFreeGamesApi() {
@@ -113,7 +106,7 @@ function buildEgs(data) {
 
   for (let i = 0; i < (data.length); i++) {
     let objectID = data[i];
-    //builder(objectID);
+    builder(objectID);
     fullscreenDiv(objectID);
   }
 };
@@ -151,9 +144,9 @@ function builder(objectID) {
   article.appendChild(h3);
   buildReview.appendChild(article);
 
-  img.title = objectID.id;
-  h3.title = objectID.id;
-  container.title = objectID.id;
+  img.title = objectID.title;
+  h3.title = objectID.title;
+  container.title = objectID.title;
 }
 
 function fullscreenDiv(objectID) {
@@ -161,6 +154,7 @@ function fullscreenDiv(objectID) {
   let head = document.createElement("H3");
   let img = document.createElement("img");
   let bigArticle = document.createElement("article");
+  bigArticle.style.display = "none";
 
   for (let i = 0; i < (objectID.keyImages.length); i++) {
     if (objectID.keyImages[i].type === "OfferImageWide"){
@@ -168,15 +162,97 @@ function fullscreenDiv(objectID) {
     }
   }
 
+  let gameDescription = document.createTextNode(objectID.description);
+  let text = document.createElement("p");
+  text.appendChild(gameDescription);
+
+
+
+  let gameUrl = document.createTextNode("länk till " + objectID.title);
+  let textUrl = document.createElement("a");
+
+  textUrl.appendChild(gameUrl);
+  textUrl.setAttribute("href", objectID.url);
+  //textUrl.textContent = "länk till " + objectID.title;
+
+
+  bigArticle.id = objectID.title;
   bigArticle.classList.add("big-article");
-
-
+  //bigArticle.style.display = "none";
   head.appendChild(gameHead);
   bigArticle.appendChild(head);
   bigArticle.appendChild(img);
+  bigArticle.appendChild(text);
+  bigArticle.appendChild(textUrl);
   buildReview.appendChild(bigArticle);
-
 }
+
+const main = document.getElementById("main");
+
+
+
+//eventlistener för hela main-innehållet
+main.addEventListener("click", function (e) {
+  let thisId;
+  if (e.target.classList.contains('biginfo')) {
+    thisId = document.getElementById(e.target.title);
+        thisId.style.display = "block";
+        //review(thisId);
+  }
+
+  else if (e.target.classList.contains('big-article')) {
+        thisId.style.display = "none";
+  }
+})
+
+async function review(games) {
+  let game = games.top_sellers.items[1].name;
+  // let game = games.featured_win[0].name;
+  console.log(game);
+  const url = `https://opencritic-api.p.rapidapi.com/game/search?criteria=${game}%203`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': process.env.USE_THIS,
+      'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    let review = result[0].id;
+    //reviewThis(review);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+//let listHere = document.getElementById("review"); 
+
+async function reviewThis(review) {
+  const url = `https://opencritic-api.p.rapidapi.com/reviews/game/${review}?sort=newest`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': process.env.USE_THIS,
+      'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    document.getElementById("review").innerHTML = result;
+    console.log(result);
+    result.forEach((results) =>
+      console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 
 /*
@@ -381,60 +457,3 @@ function addGameInfo(data, container){
 }
 */
 
-const main = document.getElementById("main");
-
-//eventlistener för hela main-innehållet
-main.addEventListener("click", function (e) {
-
-  if (e.target.classList.contains('biginfo')) {
-    alert(e.target.title);
-  }
-})
-
-async function review(games) {
-  let game = games.top_sellers.items[1].name;
-  // let game = games.featured_win[0].name;
-  console.log(game);
-  const url = `https://opencritic-api.p.rapidapi.com/game/search?criteria=${game}%203`;
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': process.env.USE_THIS,
-      'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    let review = result[0].id;
-    //reviewThis(review);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-//let listHere = document.getElementById("review"); 
-
-async function reviewThis(review) {
-  const url = `https://opencritic-api.p.rapidapi.com/reviews/game/${review}?sort=newest`;
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': process.env.USE_THIS,
-      'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    document.getElementById("review").innerHTML = result;
-    console.log(result);
-    result.forEach((results) =>
-      console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));
-
-  } catch (error) {
-    console.error(error);
-  }
-}
