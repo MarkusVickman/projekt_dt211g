@@ -17,7 +17,6 @@ console.log(process.env.USE_THIS);
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
 topList.addEventListener("click", function (e) {
   steam("top_sellers");
-  console.log(okej);
 })
 
 //vid click på sökknapp samlas input in och skickas vidare till apilänken
