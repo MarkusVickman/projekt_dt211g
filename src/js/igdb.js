@@ -5,6 +5,7 @@ let bigReview = document.getElementById("big-review");
 let checkIfOpen = 0;
 let thisId;
 let closeByBackground = document.getElementById("big-article-background");
+let searchDiv = document.getElementById("search-div");
 
 let menuUl = document.getElementById("menu-ul");
 
@@ -31,8 +32,8 @@ body.addEventListener("click", function (e) {
 
   if (e.target.id === "egs-sale") {
     if (window.innerWidth < 800) {
-      menuUl.style.display = "none";       
-  }
+      menuUl.style.display = "none";
+    }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Games Rea", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
@@ -40,8 +41,8 @@ body.addEventListener("click", function (e) {
 
   if (e.target.id === "comingsoon") {
     if (window.innerWidth < 800) {
-      menuUl.style.display = "none";       
-  }
+      menuUl.style.display = "none";
+    }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Games Kommande Spel", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
@@ -49,20 +50,26 @@ body.addEventListener("click", function (e) {
 
   if (e.target.id === "free") {
     if (window.innerWidth < 800) {
-      menuUl.style.display = "none";       
-  }
+      menuUl.style.display = "none";
+    }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Gratis Spel och kommande gratis spel", 'https://free-epic-games.p.rapidapi.com/free', 'free-epic-games.p.rapidapi.com');
   }
 
-  if (e.target.id === 'best-this-year') {
+  if (e.target.id === 'search-review') {
     if (window.innerWidth < 800) {
-      menuUl.style.display = "none";       
-  }
+      menuUl.style.display = "none";
+    }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
-    egsSaleApi("Högst rankade i år", `https://opencritic-api.p.rapidapi.com/game/hall-of-fame`, 'opencritic-api.p.rapidapi.com');
+    searchDiv.style.display = "block";
+    //egsSaleApi("Sök Recension", `https://opencritic-api.p.rapidapi.com/game/hall-of-fame`, 'opencritic-api.p.rapidapi.com');
+  }
+
+  if (e.target.id === 'search-div' || e.target.id === 'search-close') {
+    searchDiv.style.display = "none";
+  
   }
 })
 
@@ -80,7 +87,7 @@ async function egsSaleApi(header, url, host, title) {
     if (header === "Recension") {
       reviewThis(result, header, title);
     }
-    else if(header === "Högst rankade i år"){
+    else if (header === "Högst rankade i år") {
       buildTopList(result, header);
     }
     else {
@@ -90,10 +97,6 @@ async function egsSaleApi(header, url, host, title) {
     console.error(error);
   }
 }
-/*
-function buildTopList(){
-Get the top 12 games on the OpenCritic Hall of Fame for the current year (usually changes in early February).
-}*/
 
 function reviewThis(data, header, title) {
   console.log(title, data);
