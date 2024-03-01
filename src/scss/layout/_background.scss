@@ -13,6 +13,7 @@
 
 #review h2{
     margin-bottom: 20px;
+
 }
 
 .background-container{
@@ -24,4 +25,19 @@
 
 body{
     background: linear-gradient((#052241),(#3f6884),(#052241));
+}
+
+@media screen and (min-width: 800px) and (max-width: 2048px) {
+    #review h2{
+        margin-top: 120px;
+    
+    }
+
+}
+
+@media screen and (min-width: 2049px) {
+    #review h2{
+        margin-top: 120px;
+
+    }
 }

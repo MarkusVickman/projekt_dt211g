@@ -7,7 +7,7 @@
   color: #000000;
   padding: .75rem 1rem;
   text-align: center;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.6), 0 2px 3px 0 rgba(0, 0, 0, 0.6);
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -15,11 +15,12 @@
   font-size: 1.2em;
   font-weight: 500;
   width: auto;
-  display: inline-block;
+  display: block;
 }
 
 .button:hover{
-  background-color: rgb(239, 242, 245);
+  background-color: #dddcdc;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.8), 0 2px 4px 0 rgba(0, 0, 0, 0.8);
 }
 
 .close-by-button{
@@ -29,9 +30,14 @@
 }
 
 @media screen and (min-width: 800px) and (max-width: 2048px) {
+  .button {
+    display: inline-block;
+  }
 
 }
 
 @media screen and (min-width: 2049px) {
-
+  .button {
+    display: inline-block;
+  }
 }

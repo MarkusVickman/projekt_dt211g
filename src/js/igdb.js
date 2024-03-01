@@ -6,6 +6,8 @@ let checkIfOpen = 0;
 let thisId;
 let closeByBackground = document.getElementById("big-article-background");
 
+let menuUl = document.getElementById("menu-ul");
+
 import { okey } from "./start";
 const okej = okey();
 
@@ -16,7 +18,7 @@ body.addEventListener("click", function (e) {
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
     egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}%203`, 'opencritic-api.p.rapidapi.com', e.target.title);
-    
+
     checkIfOpen = 1;
     //review(thisId);
   }
@@ -28,18 +30,27 @@ body.addEventListener("click", function (e) {
   }
 
   if (e.target.id === "egs-sale") {
+    if (window.innerWidth < 800) {
+      menuUl.style.display = "none";       
+  }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Games Rea", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
   }
 
   if (e.target.id === "comingsoon") {
+    if (window.innerWidth < 800) {
+      menuUl.style.display = "none";       
+  }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Games Kommande Spel", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
   }
 
   if (e.target.id === "free") {
+    if (window.innerWidth < 800) {
+      menuUl.style.display = "none";       
+  }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Epic Gratis Spel och kommande gratis spel", 'https://free-epic-games.p.rapidapi.com/free', 'free-epic-games.p.rapidapi.com');
@@ -57,11 +68,11 @@ async function egsSaleApi(header, url, host, title) {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    if(header === "Recension"){
-    reviewThis(result, header, title);
+    if (header === "Recension") {
+      reviewThis(result, header, title);
     }
-    else{
-    buildEgs(result, header);
+    else {
+      buildEgs(result, header);
     }
   } catch (error) {
     console.error(error);
@@ -79,40 +90,40 @@ function reviewThis(data, header, title) {
 
   //let tempUl = document.createElement("ul");
 
-  for(let i = 0; i < data.length; i++){
+  for (let i = 0; i < data.length; i++) {
     /*let tempLi = document.createElement("li");
     let tempText = document.createTextNode(data[i].game.name);*/
 
-  let gameHead = document.createTextNode(data.game.name);
-  let head = document.createElement("H3");
-  head.appendChild(gameHead);
+    let gameHead = document.createTextNode(data.game.name);
+    let head = document.createElement("H3");
+    head.appendChild(gameHead);
 
-  let gameDescription = document.createTextNode(data.snippet);
-  let textReview = document.createElement("p");
-  textReview.appendChild(gameDescription);
+    let gameDescription = document.createTextNode(data.snippet);
+    let textReview = document.createElement("p");
+    textReview.appendChild(gameDescription);
 
-  let gameScore = document.createTextNode(data.score);
-  let textScore = document.createElement("p");
-  textScore.appendChild(gameScore);
+    let gameScore = document.createTextNode(data.score);
+    let textScore = document.createElement("p");
+    textScore.appendChild(gameScore);
 
-  let reviewUrl = document.createTextNode("Länk till " + data.Outlet.name);
-  let textUrl = document.createElement("a");
-  textUrl.appendChild(reviewUrl);
+    let reviewUrl = document.createTextNode("Länk till " + data.Outlet.name);
+    let textUrl = document.createElement("a");
+    textUrl.appendChild(reviewUrl);
 
-  if (objectID.url !== null){
-  textUrl.setAttribute("href", data.externalUrl);
-  } else {
-    textUrl.setAttribute("href", "https://opencritic.com/");
+    if (objectID.url !== null) {
+      textUrl.setAttribute("href", data.externalUrl);
+    } else {
+      textUrl.setAttribute("href", "https://opencritic.com/");
+    }
+
+    bigArticle.appendChild(head);
+    bigArticle.appendChild(textReview);
+    bigArticle.appendChild(textScore);
+    bigArticle.appendChild(textUrl);
   }
-
-  bigArticle.appendChild(head);
-  bigArticle.appendChild(textReview);
-  bigArticle.appendChild(textScore);
-  bigArticle.appendChild(textUrl);
-  }
-    //console.log(result);
-    //result.forEach((results) =>
-     // console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));*/
+  //console.log(result);
+  //result.forEach((results) =>
+  // console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));*/
 }
 
 function buildEgs(data, header) {
@@ -198,8 +209,8 @@ function fullscreenDiv(objectID) {
   let textUrl = document.createElement("a");
 
   textUrl.appendChild(gameUrl);
-  if (objectID.url !== null){
-  textUrl.setAttribute("href", objectID.url);
+  if (objectID.url !== null) {
+    textUrl.setAttribute("href", objectID.url);
   } else {
     textUrl.setAttribute("href", "https://store.epicgames.com/");
   }

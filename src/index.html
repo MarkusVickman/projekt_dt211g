@@ -7,8 +7,10 @@
     <title>Search A Game</title>
     <!--Länk till scss-fil-->
     <link rel="stylesheet" href="scss/main.scss">
-    <!--Länk till javascript mobilmeny-->
+    <!--Länk till alla apier-->
     <script type="module" src="js/igdb.js"></script>
+        <!--Länk till javascript mobilmeny-->
+        <script type="module" src="js/menu.js"></script>
     <!--Favicon-->
     <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?ver=2.0">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -27,12 +29,13 @@
     <header>
 
         <nav>
-            <div alt-title="Menyknapp" id="menu"><img src="img/new_logo.png" id="logo" alt="logotyp"><h4 id="menu-text">Meny</h4></div>
-            <ul>
+            <div id="menu"><img src="img/new_logo.png" id="logo" alt="logotyp"><h4 id="menu-text">Meny</h4></div>
+            <ul id="menu-ul">
                 <li id="egs-sale" class="button">Rea</li>
                 <li id="comingsoon" class="button">Kommande</li>
                 <li id="free" class="button">Gratis</li>
                 <li id="newreleases" class="button">Sök recention</li>
+                <li id="close-menu" class="button">Stäng meny</li>
             </ul>
         <!--<button id="egs-sale" class="button">Epic rea</button>
             <button id="comingsoon" class="button">Kommer snart</button>

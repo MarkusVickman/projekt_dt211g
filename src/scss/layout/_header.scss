@@ -1,7 +1,5 @@
 #logo {
     position: relative;
-    top: 5px;
-    left: 5px;
     height: 60px;
 }
 
@@ -21,26 +19,32 @@ header {
 }
 
 header ul {
-    margin-top: 100px;
+    margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
-    width: 550px;
+    width: 100%;
     display: none;
-
+    position: absolute;
+    z-index: 1;
 }
 
 header li {
-    margin-left: 12px;
     display: block;
-
+    list-style: none;
 }
 
 nav div {
     position: absolute;
-    transform: translate(-50%);
-    margin-left: 50%;
-    top:50px;
+    right: 20px;
+    top: 20px;
 }
+
+#close-menu{
+    display: block;
+}
+
+
+
 
 @media screen and (min-width: 800px) and (max-width: 2048px) {
 
@@ -69,6 +73,8 @@ nav div {
         margin-right: auto;
         width: 550px;
         display: block;
+        position: static;
+        z-index: 0;
     }
 
     header li {
@@ -82,10 +88,14 @@ nav div {
 
     nav div {
         position: absolute;
-        left: 5%;
-        top: 30px;
+        right: 5%;
+        top: 20px;
         transform: none;
         margin: 0;
+    }
+
+    #close-menu{
+        display: none;
     }
 
 }
@@ -117,6 +127,8 @@ nav div {
         margin-right: auto;
         width: 550px;
         display: block;
+        position: static;
+        z-index: 0;
     }
 
     header li {
@@ -130,11 +142,14 @@ nav div {
 
     nav div {
         position: absolute;
-        left: 14%;
-        top: 30px;
+        right: 14%;
+        top: 20px;
         transform: none;
         margin: 0;
     }
 
+    #close-menu{
+        display: none;
+    }
 
 }
