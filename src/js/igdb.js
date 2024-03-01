@@ -15,6 +15,8 @@ body.addEventListener("click", function (e) {
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
+    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}%203`, 'opencritic-api.p.rapidapi.com', e.target.title);
+    
     checkIfOpen = 1;
     //review(thisId);
   }
@@ -44,7 +46,7 @@ body.addEventListener("click", function (e) {
   }
 })
 
-async function egsSaleApi(header, url, host) {
+async function egsSaleApi(header, url, host, title) {
   const options = {
     method: 'GET',
     headers: {
@@ -55,13 +57,66 @@ async function egsSaleApi(header, url, host) {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
+    if(header === "Recension"){
+    reviewThis(result, header, title);
+    }
+    else{
     buildEgs(result, header);
+    }
   } catch (error) {
     console.error(error);
   }
 }
 
+function reviewThis(data, header, title) {
+  console.log(title, data);
+  let bigArticle = document.getElementById(title);
+  let reviewHeader = document.createTextNode(header);
+  let h2 = document.createElement("H2");
+  h2.appendChild(reviewHeader);
+
+  bigArticle.appendChild(h2);
+
+  //let tempUl = document.createElement("ul");
+
+  for(let i = 0; i < data.length; i++){
+    /*let tempLi = document.createElement("li");
+    let tempText = document.createTextNode(data[i].game.name);*/
+
+  let gameHead = document.createTextNode(data.game.name);
+  let head = document.createElement("H3");
+  head.appendChild(gameHead);
+
+  let gameDescription = document.createTextNode(data.snippet);
+  let textReview = document.createElement("p");
+  textReview.appendChild(gameDescription);
+
+  let gameScore = document.createTextNode(data.score);
+  let textScore = document.createElement("p");
+  textScore.appendChild(gameScore);
+
+  let reviewUrl = document.createTextNode("Länk till " + data.Outlet.name);
+  let textUrl = document.createElement("a");
+  textUrl.appendChild(reviewUrl);
+
+  if (objectID.url !== null){
+  textUrl.setAttribute("href", data.externalUrl);
+  } else {
+    textUrl.setAttribute("href", "https://opencritic.com/");
+  }
+
+  bigArticle.appendChild(head);
+  bigArticle.appendChild(textReview);
+  bigArticle.appendChild(textScore);
+  bigArticle.appendChild(textUrl);
+  }
+    //console.log(result);
+    //result.forEach((results) =>
+     // console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));*/
+}
+
 function buildEgs(data, header) {
+  //console.log(data);
   let text = document.createTextNode(header);
   let h2 = document.createElement("H2");
   h2.appendChild(text);
@@ -143,7 +198,11 @@ function fullscreenDiv(objectID) {
   let textUrl = document.createElement("a");
 
   textUrl.appendChild(gameUrl);
+  if (objectID.url !== null){
   textUrl.setAttribute("href", objectID.url);
+  } else {
+    textUrl.setAttribute("href", "https://store.epicgames.com/");
+  }
   //textUrl.textContent = "länk till " + objectID.title;
 
   let closeBtn = document.createElement("button");
@@ -162,7 +221,7 @@ function fullscreenDiv(objectID) {
   bigArticle.appendChild(textUrl);
   bigReview.appendChild(bigArticle);
 }
-
+/*
 async function review(games) {
   let game = games.top_sellers.items[1].name;
   // let game = games.featured_win[0].name;
@@ -186,25 +245,4 @@ async function review(games) {
   }
 }
 
-async function reviewThis(review) {
-  const url = `https://opencritic-api.p.rapidapi.com/reviews/game/${review}?sort=newest`;
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': process.env.USE_THIS,
-      'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com'
-    }
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    document.getElementById("review").innerHTML = result;
-    console.log(result);
-    result.forEach((results) =>
-      console.log(results.score + results.snippet + results.game.name + results.publishedDate + results.externalUrl + results.Outlet.name));
-
-  } catch (error) {
-    console.error(error);
-  }
-}
+*/
