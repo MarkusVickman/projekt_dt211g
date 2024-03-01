@@ -14,9 +14,11 @@
   touch-action: manipulation;
   font-size: 1.2em;
   font-weight: 500;
+  width: auto;
+  display: inline-block;
 }
 
-.button:hover {
+.button:hover{
   background-color: rgb(239, 242, 245);
 }
 
@@ -24,4 +26,12 @@
   position: relative;
   top: -10px;
   float: right;
+}
+
+@media screen and (min-width: 800px) and (max-width: 2048px) {
+
+}
+
+@media screen and (min-width: 2049px) {
+
 }

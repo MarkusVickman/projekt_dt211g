@@ -1,19 +1,140 @@
+#logo {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    height: 60px;
+}
 
-#logo{
+nav div:hover {
+    #logo{
+    height: 70px;
+    }
+    h4 {
+        font-size: 1.4em;
+    }
+}
+
+
+header {
+    background: #09294c;
+    height: 100px;
+}
+
+header ul {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    display: none;
+
+}
+
+header li {
+    margin-left: 12px;
+    display: block;
+
+}
+
+nav div {
     position: absolute;
-    top:10;
-    height: 80px;
     transform: translate(-50%);
     margin-left: 50%;
-    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+    top:50px;
 }
-/*
-#logo:hover{
-    top:0;
-    height: 100px;
-}*/
 
-header{
-    height: 160px;
-    background: #09294c;
+@media screen and (min-width: 800px) and (max-width: 2048px) {
+
+    #logo {
+        height: 80px;
+    }
+
+    
+    nav div:hover {
+        #logo{
+        height: 80px;
+        }
+        h4 {
+            font-size: 1.4em;
+        }
+    }
+
+    header {
+        background: #09294c;
+        height: 0px;
+    }
+
+    header ul {
+        margin-top: 80px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 550px;
+        display: block;
+    }
+
+    header li {
+        margin-left: 12px;
+        display: inline-block;
+    }
+
+    header h4 {
+        display: none;
+    }
+
+    nav div {
+        position: absolute;
+        left: 5%;
+        top: 30px;
+        transform: none;
+        margin: 0;
+    }
+
+}
+
+@media screen and (min-width: 2049px) {
+
+    #logo {
+        height: 80px;
+    }
+
+    
+    nav div:hover {
+        #logo{
+        height: 80px;
+        }
+        h4 {
+            font-size: 1.4em;
+        }
+    }
+
+    header {
+        background: #09294c;
+        height: 0px;
+    }
+
+    header ul {
+        margin-top: 80px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 550px;
+        display: block;
+    }
+
+    header li {
+        margin-left: 12px;
+        display: inline-block;
+    }
+
+    header h4 {
+        display: none;
+    }
+
+    nav div {
+        position: absolute;
+        left: 14%;
+        top: 30px;
+        transform: none;
+        margin: 0;
+    }
+
+
 }
