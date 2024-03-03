@@ -1,5 +1,5 @@
 "use strict"
-//let searchReview = document.getElementById("searchreview");
+//let searchReview = document.getElementById("searchreview");  
 let buildReview = document.getElementById("review");
 let bigReview = document.getElementById("big-review");
 let checkIfOpen = 0;
@@ -18,11 +18,34 @@ body.addEventListener("click", function (e) {
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
-    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}%203`, 'opencritic-api.p.rapidapi.com', e.target.title);
+    //Bygger reset för recensioner i stor visning
+    let resetReview = e.target.title + ":r";
+    document.getElementById(resetReview).innerHTML = "";
+    let resetReviewButton = e.target.title + ":button";
+    if (document.getElementById(resetReviewButton) !== null) {
+      document.getElementById(resetReviewButton).innerHTML = "";
+    }
+
+    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
 
     checkIfOpen = 1;
     //review(thisId);
   }
+  /*
+  //ska bygga stor info av recensioner.
+  //vid val av recention stängs rutan och en sökning på egs görs.
+  
+    if (e.target.id === "top-rated") {
+          if (window.innerWidth < 800) {
+        menuUl.style.display = "none";
+      }
+  
+          bigReview.innerHTML = "";
+      buildReview.innerHTML = "";
+    
+    egsSaleApi("Årets Topplista", 'https://opencritic-api.p.rapidapi.com/game/hall-of-fame', 'opencritic-api.p.rapidapi.com';
+  
+  */
 
   if (e.target.classList.contains('close-by-button') || e.target.id === "big-article-background") {
     thisId.style.display = "none";
@@ -30,13 +53,25 @@ body.addEventListener("click", function (e) {
     checkIfOpen = 0;
   }
 
-  if (e.target.id === "egs-sale") {
-    if (window.innerWidth < 800) {
+  if (e.target.id === "search-button") {
+    /*if (window.innerWidth < 800) {
       menuUl.style.display = "none";
-    }
+    }*/
+    let input = document.getElementById("input-search");
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
-    egsSaleApi("Epic Games Rea", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
+    egsSaleApi("Spel hos Epic Games", `https://epic-store-games.p.rapidapi.com/onSale?searchWords=${input.value}&locale=sv&country=sv`, 'epic-store-games.p.rapidapi.com');
+  }
+
+  if (e.target.classList.contains('review-button')) {
+    /*thisId = document.getElementById(e.target.title);
+    thisId.style.display = "block";
+    closeByBackground.style.display = "block";*/
+    //let reviewArticle = document.getElementById(parentId + ":r");
+
+    egsSaleApi("Recension av", `https://opencritic-api.p.rapidapi.com/reviews/game/${e.target.id}?sort=popularity'`, 'opencritic-api.p.rapidapi.com', e.target.id, thisId.id);
+
+    //review(thisId);
   }
 
   if (e.target.id === "comingsoon") {
@@ -58,22 +93,21 @@ body.addEventListener("click", function (e) {
   }
 
   if (e.target.id === 'search-review') {
-    if (window.innerWidth < 800) {
+    /*if (window.innerWidth < 800) {
       menuUl.style.display = "none";
-    }
+    }*/
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     searchDiv.style.display = "block";
     //egsSaleApi("Sök Recension", `https://opencritic-api.p.rapidapi.com/game/hall-of-fame`, 'opencritic-api.p.rapidapi.com');
   }
 
-  if (e.target.id === 'search-div' || e.target.id === 'search-close') {
+  /*if (e.target.id === 'search-div' || e.target.id === 'search-close') {
     searchDiv.style.display = "none";
-  
-  }
+  }*/
 })
 
-async function egsSaleApi(header, url, host, title) {
+async function egsSaleApi(header, url, host, title, parentId) {
   const options = {
     method: 'GET',
     headers: {
@@ -85,7 +119,10 @@ async function egsSaleApi(header, url, host, title) {
     const response = await fetch(url, options);
     const result = await response.json();
     if (header === "Recension") {
-      reviewThis(result, header, title);
+      chooseRightReview(result, title);
+    }
+    else if (header === "Recension av") {
+      reviewThis(result, header, title, parentId);
     }
     else if (header === "Högst rankade i år") {
       buildTopList(result, header);
@@ -98,47 +135,69 @@ async function egsSaleApi(header, url, host, title) {
   }
 }
 
-function reviewThis(data, header, title) {
-  console.log(title, data);
+function chooseRightReview(data, title) {
   let bigArticle = document.getElementById(title);
-  let reviewHeader = document.createTextNode(header);
+  let reviewHeader = document.createTextNode("Välja matchande recension");
+  let h2 = document.createElement("H2");
+  h2.appendChild(reviewHeader);
+  bigArticle.appendChild(h2);
+
+  let ulEl = document.createElement("ul");
+  ulEl.id = title + ":button";
+
+  for (let i = 0; i < data.length; i++) {
+    let listEl = document.createElement("li");
+    let gameName = document.createTextNode(data[i].name);
+    listEl.appendChild(gameName);
+    listEl.id = data[i].id;
+    listEl.classList.add("review-button");
+
+    ulEl.appendChild(listEl);
+  }
+
+  bigArticle.appendChild(ulEl);
+}
+
+//Lägg till build big article, för recentionstopplista. loopar och if satser för att skapa och skilja ut.
+function reviewThis(data, header, title, parentId) {
+  console.log(/*title, data*/ parentId);
+  let reviewArticle = document.getElementById(parentId + ":r");
+  let reviewHeader = document.createTextNode("Recentioner");
   let h2 = document.createElement("H2");
   h2.appendChild(reviewHeader);
 
-  bigArticle.appendChild(h2);
+  reviewArticle.appendChild(h2);
 
   //let tempUl = document.createElement("ul");
 
   for (let i = 0; i < data.length; i++) {
-    /*let tempLi = document.createElement("li");
-    let tempText = document.createTextNode(data[i].game.name);*/
 
-    let gameHead = document.createTextNode(data.game.name);
+    let gameHead = document.createTextNode(data[i].game.name);
     let head = document.createElement("H3");
     head.appendChild(gameHead);
 
-    let gameDescription = document.createTextNode(data.snippet);
+    let gameDescription = document.createTextNode(data[i].snippet);
     let textReview = document.createElement("p");
     textReview.appendChild(gameDescription);
 
-    let gameScore = document.createTextNode(data.score);
+    let gameScore = document.createTextNode(data[i].score);
     let textScore = document.createElement("p");
     textScore.appendChild(gameScore);
 
-    let reviewUrl = document.createTextNode("Länk till " + data.Outlet.name);
+    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name);
     let textUrl = document.createElement("a");
     textUrl.appendChild(reviewUrl);
 
-    if (objectID.url !== null) {
-      textUrl.setAttribute("href", data.externalUrl);
+    if (data[i].externalUrl !== null) {
+      textUrl.setAttribute("href", data[i].externalUrl);
     } else {
       textUrl.setAttribute("href", "https://opencritic.com/");
     }
 
-    bigArticle.appendChild(head);
-    bigArticle.appendChild(textReview);
-    bigArticle.appendChild(textScore);
-    bigArticle.appendChild(textUrl);
+    reviewArticle.appendChild(head);
+    reviewArticle.appendChild(textReview);
+    reviewArticle.appendChild(textScore);
+    reviewArticle.appendChild(textUrl);
   }
   //console.log(result);
   //result.forEach((results) =>
@@ -151,7 +210,7 @@ function buildEgs(data, header) {
   let h2 = document.createElement("H2");
   h2.appendChild(text);
   buildReview.appendChild(h2);
-  if (header === "Epic Games Rea" || header === "Epic Games Kommande Spel") {
+  if (header === "Spel hos Epic Games" || header === "Epic Games Kommande Spel") {
     for (let i = 0; i < (data.length); i++) {
       let objectID = data[i];
       builder(objectID);
@@ -240,6 +299,12 @@ function fullscreenDiv(objectID) {
   closeBtn.appendChild(buttonText);
   closeBtn.classList.add("close-by-button", "button");
 
+  //Div for review
+  let reviewArticle = document.createElement("article");
+  reviewArticle.id = objectID.title + ":r";
+  bigArticle.appendChild(reviewArticle);
+
+
   bigArticle.appendChild(closeBtn);
   bigArticle.id = objectID.title;
   bigArticle.classList.add("big-article");
@@ -250,6 +315,7 @@ function fullscreenDiv(objectID) {
   bigArticle.appendChild(text);
   bigArticle.appendChild(textUrl);
   bigReview.appendChild(bigArticle);
+  bigArticle.appendChild(reviewArticle);
 }
 /*
 async function review(games) {
