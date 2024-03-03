@@ -31,21 +31,27 @@ body.addEventListener("click", function (e) {
     checkIfOpen = 1;
     //review(thisId);
   }
-  /*
+
+  if (e.target.classList.contains('largerReview')){
+    thisId = document.getElementById(e.target.title);
+    thisId.style.display = "block";
+    closeByBackground.style.display = "block";
+  }
+
   //ska bygga stor info av recensioner.
   //vid val av recention stängs rutan och en sökning på egs görs.
-  
-    if (e.target.id === "top-rated") {
-          if (window.innerWidth < 800) {
-        menuUl.style.display = "none";
-      }
-  
-          bigReview.innerHTML = "";
-      buildReview.innerHTML = "";
-    
-    egsSaleApi("Årets Topplista", 'https://opencritic-api.p.rapidapi.com/game/hall-of-fame', 'opencritic-api.p.rapidapi.com';
-  
-  */
+
+  if (e.target.id === "top-rated") {
+    if (window.innerWidth < 800) {
+      menuUl.style.display = "none";
+    }
+
+    bigReview.innerHTML = "";
+    buildReview.innerHTML = "";
+
+    egsSaleApi("Årets Topplista", 'https://opencritic-api.p.rapidapi.com/game/hall-of-fame', 'opencritic-api.p.rapidapi.com');
+  }
+
 
   if (e.target.classList.contains('close-by-button') || e.target.id === "big-article-background") {
     thisId.style.display = "none";
@@ -53,14 +59,23 @@ body.addEventListener("click", function (e) {
     checkIfOpen = 0;
   }
 
-  if (e.target.id === "search-button") {
+  if (e.target.id === "search-button" || e.target.id === "searchByReview") {
     /*if (window.innerWidth < 800) {
       menuUl.style.display = "none";
     }*/
-    let input = document.getElementById("input-search");
+    let input;
+
+    if(e.target.id === "search-button"){
+    input = document.getElementById("input-search").value;
+    }
+    else {
+      input = e.target.title;
+      closeByBackground.style.display = "none";
+    }
+
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
-    egsSaleApi("Spel hos Epic Games", `https://epic-store-games.p.rapidapi.com/onSale?searchWords=${input.value}&locale=sv&country=sv`, 'epic-store-games.p.rapidapi.com');
+    egsSaleApi("Spel hos Epic Games", `https://epic-store-games.p.rapidapi.com/onSale?searchWords=${input}&locale=sv&country=sv`, 'epic-store-games.p.rapidapi.com');
   }
 
   if (e.target.classList.contains('review-button')) {
@@ -124,7 +139,7 @@ async function egsSaleApi(header, url, host, title, parentId) {
     else if (header === "Recension av") {
       reviewThis(result, header, title, parentId);
     }
-    else if (header === "Högst rankade i år") {
+    else if (header === "Årets Topplista") {
       buildTopList(result, header);
     }
     else {
@@ -158,7 +173,9 @@ function chooseRightReview(data, title) {
   bigArticle.appendChild(ulEl);
 }
 
-//Lägg till build big article, för recentionstopplista. loopar och if satser för att skapa och skilja ut.
+//Lägg till liten article, för recentionstopplista. loopar och if satser för att skapa och skilja ut.
+
+
 function reviewThis(data, header, title, parentId) {
   console.log(/*title, data*/ parentId);
   let reviewArticle = document.getElementById(parentId + ":r");
@@ -228,9 +245,112 @@ function buildEgs(data, header) {
       builder(objectID);
       fullscreenDiv(objectID);
     }
+
+
   }
 
 };
+
+function buildTopList(data, header) {
+
+  let text = document.createTextNode(header);
+  let h2 = document.createElement("H2");
+  h2.appendChild(text);
+  buildReview.appendChild(h2);
+
+  for (let i = 0; i < (data.length); i++) {
+
+    let gameHeader = document.createTextNode(data[i].name);
+    //let text = document.createTextNode(top.top_sellers.items[i].large_capsule_image);
+    let h3 = document.createElement("H3");
+    h3.classList.add("article-h3", "largerReview");
+    let container = document.createElement("article");
+    container.classList.add("article-container", "largerReview");
+
+    let article = document.createElement("div");
+    article.classList.add("article");
+    //let p = document.createElement("p");
+    // p.classList.add("article-top-text");  https://img.opencritic.com/
+
+    let img = document.createElement("img");
+    img.classList.add("largerReview");
+
+    img.src = "https://img.opencritic.com/" + data[i].images.banner.sm;
+
+    h3.appendChild(gameHeader);
+    container.appendChild(img);
+
+    article.appendChild(container);
+    article.appendChild(h3);
+    buildReview.appendChild(article);
+
+    img.title = data[i].name;
+    h3.title = data[i].name;
+    container.title = data[i].name;
+
+    buildBigTopList(data[i]);
+  }
+}
+
+
+
+function buildBigTopList(data){
+  let gameHead = document.createTextNode(data.name);
+  let head = document.createElement("H3");
+  head.appendChild(gameHead);
+
+  let img = document.createElement("img");
+  let bigArticle = document.createElement("article");
+  bigArticle.style.display = "none";
+
+  img.src = "https://img.opencritic.com/" + data.images.banner.sm;
+
+  let shortReleaseDate = truncateReleaseDate(data.firstReleaseDate, 10);
+
+  let gameRelease = document.createTextNode("Lanserings Datum: " + shortReleaseDate);
+  let text = document.createElement("p");
+  text.appendChild(gameRelease);
+
+  let scoreH3 = document.createElement("H3");
+  let scoreText = document.createTextNode("Rating " + data.topCriticScore + "/100 Poäng");
+  scoreH3.appendChild(scoreText);
+
+  let searchH3 = document.createElement("H5");
+  let searchText = document.createTextNode("Sök spelet i Epic Games Store. Det är tyvärr ganska vanligt att de senaste spelen inte finns med i deras butik.");
+  searchH3.appendChild(searchText);
+
+  let searchBtn = document.createElement("button");
+  let buttonText = document.createTextNode("Sök");
+  searchBtn.appendChild(buttonText);
+  searchBtn.classList.add("button");
+  searchBtn.id = "searchByReview";
+  searchBtn.title = data.name;
+
+  /*
+  //Div for review
+  let reviewArticle = document.createElement("article");
+  reviewArticle.id = objectID.title + ":r";
+  bigArticle.appendChild(reviewArticle);
+*/
+
+
+  bigArticle.id = data.name;
+  bigArticle.classList.add("big-article");
+  //bigArticle.style.display = "none";
+  bigArticle.appendChild(head);
+
+  bigArticle.appendChild(img);
+  bigArticle.appendChild(text);
+  bigArticle.appendChild(scoreH3);
+  bigArticle.appendChild(searchH3);
+  bigArticle.appendChild(searchBtn);
+  bigReview.appendChild(bigArticle);
+  //bigArticle.appendChild(reviewArticle);
+}
+
+function truncateReleaseDate(str, num) {
+  return str;
+}
 
 function builder(objectID) {
   let gameHeader = document.createTextNode(objectID.title);
