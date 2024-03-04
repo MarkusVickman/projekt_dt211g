@@ -6,10 +6,8 @@ Topplista laddas in från opencritic och där kan man söka efter spelet i epic 
 let buildReview = document.getElementById("review");
 let bigReview = document.getElementById("big-review");
 let closeByBackground = document.getElementById("big-article-background");
-let searchDiv = document.getElementById("search-div");
 //Mobilmenyn är med här också för att kunna döjas när valknappar används
 let menuUl = document.getElementById("menu-ul");
-//let checkIfOpen = 0;
 /*thisId används för att identifiera vilket spel som väljs, den är i global scope för att kunna välja rätt spel och för att kunna stänga identifiera vilken spelförstoring som ska stängas när klick bredvid görs*/
 let thisId;
 
@@ -24,19 +22,11 @@ body.addEventListener("click", function (e) {
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
-    //Bygger reset för recensioner i stor visning
     /*extra information skapas i funktionen reviewThis för att kunna hålla isär olika element, titel+ :r används för att resetta så att inte samma recension visas flera ggr. :button används av samma anledning*/
-    let resetReview = e.target.title + ":r";
-    document.getElementById(resetReview).innerHTML = "";
-    let resetReviewButton = e.target.title + ":button";
-    if (document.getElementById(resetReviewButton) !== null) {
-      document.getElementById(resetReviewButton).innerHTML = "";
-    }
-    // PAUSAD PGA SLUT
-    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
+    let resetReview = document.getElementById(e.target.title + ":r");
+    resetReview.innerHTML = "";
 
-    //checkIfOpen = 1;
-    //review(thisId);
+    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
   }
 
   /*if-sats som visar stor recention om en recension från toplistan används */
@@ -60,7 +50,6 @@ body.addEventListener("click", function (e) {
   if (e.target.classList.contains('close-by-button') || e.target.id === "big-article-background") {
     thisId.style.display = "none";
     closeByBackground.style.display = "none";
-    //checkIfOpen = 0;
   }
 
   /*om sökknappen och input används eller en knapp i topplistans resultat används görs en spelsökning hos epic games store. Dock har de lite få spel. Api information ink. sökordet skickas med till api-anropet*/
@@ -82,14 +71,7 @@ body.addEventListener("click", function (e) {
 
   /*knappar för att välja matchande/önskad recension. om recensionsknappen trycks på skickas target.id med som sökning. Target.id är ett spel id hos opencritic*/ 
   if (e.target.classList.contains('review-button')) {
-    /*thisId = document.getElementById(e.target.title);
-    thisId.style.display = "block";
-    closeByBackground.style.display = "block";*/
-    //let reviewArticle = document.getElementById(parentId + ":r");
-
     egsSaleApi("Recension av", `https://opencritic-api.p.rapidapi.com/reviews/game/${e.target.id}?sort=popularity'`, 'opencritic-api.p.rapidapi.com', e.target.id, thisId.id);
-
-    //review(thisId);
   }
 
   /*om knapp för kommande spel används skickas parametrar till ett api-anrop med.*/
@@ -145,11 +127,11 @@ async function egsSaleApi(header, url, host, title, parentId) {
 
 /*En funktion som listar spel som matchar in på valt spel. utifrån listan kan sedan ett spel väljas.*/ 
 function chooseRightReview(data, title) {
-  let bigArticle = document.getElementById(title);
-  let reviewHeader = document.createTextNode("Välja matchande recension");
+  let reviewArticle = document.getElementById(title + ":r");
+  let reviewHeader = document.createTextNode("Välj matchande recension");
   let h2 = document.createElement("H2");
   h2.appendChild(reviewHeader);
-  bigArticle.appendChild(h2);
+  reviewArticle.appendChild(h2);
   //för att kunna rensa listan med eventlisteners ett unikt id
   let ulEl = document.createElement("ul");
   ulEl.id = title + ":button";
@@ -162,10 +144,10 @@ function chooseRightReview(data, title) {
     listEl.classList.add("review-button");
     ulEl.appendChild(listEl);
   }
-  bigArticle.appendChild(ulEl);
+  reviewArticle.appendChild(ulEl);
 }
 
-/**/
+/*bygger recension för önskat spel*/
 function reviewThis(data, parentId) {
   /*unikt id för att kunna resta listan med eventlistener*/ 
   let reviewArticle = document.getElementById(parentId + ":r");
@@ -173,8 +155,8 @@ function reviewThis(data, parentId) {
   let h2 = document.createElement("H2");
   h2.appendChild(reviewHeader);
   reviewArticle.appendChild(h2);
-  /*alla matchande recensioner listas med en for-loop*/ 
-  for (let i = 0; i < data.length; i++) {
+  /*5 matchande recensioner listas med en for-loop*/ 
+  for (let i = 0; i < 5; i++) {
 
     let gameHead = document.createTextNode(data[i].game.name);
     let head = document.createElement("H3");
@@ -184,11 +166,12 @@ function reviewThis(data, parentId) {
     let textReview = document.createElement("p");
     textReview.appendChild(gameDescription);
 
-    let gameScore = document.createTextNode(data[i].score);
-    let textScore = document.createElement("p");
-    textScore.appendChild(gameScore);
+  //formatering av betyg
+  let scoreH3 = document.createElement("H3");
+  let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
+  scoreH3.appendChild(scoreText);
 
-    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name);
+    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " i Epic games store.");
     let textUrl = document.createElement("a");
     textUrl.appendChild(reviewUrl);
     //För att alltid länk ska ges används en if-sats
@@ -199,7 +182,7 @@ function reviewThis(data, parentId) {
     }
     reviewArticle.appendChild(head);
     reviewArticle.appendChild(textReview);
-    reviewArticle.appendChild(textScore);
+    reviewArticle.appendChild(scoreH3);
     reviewArticle.appendChild(textUrl);
   }
 }
@@ -283,7 +266,7 @@ function fullscreenDiv(objectID) {
   let text = document.createElement("p");
   text.appendChild(gameDescription);
 
-  let gameUrl = document.createTextNode("Länk till " + objectID.title);
+  let gameUrl = document.createTextNode("Länk till " + objectID.title + " i Epic games store.");
   let textUrl = document.createElement("a");
 
   textUrl.appendChild(gameUrl);
@@ -301,7 +284,6 @@ function fullscreenDiv(objectID) {
   //Div for review där id skapas för att kunna resta artikeln med eventlistener
   let reviewArticle = document.createElement("article");
   reviewArticle.id = objectID.title + ":r";
-  bigArticle.appendChild(reviewArticle);
   bigArticle.appendChild(closeBtn);
   bigArticle.id = objectID.title;
   bigArticle.classList.add("big-article");
