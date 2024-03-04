@@ -117,6 +117,7 @@ async function egsSaleApi(header, url, host, title, parentId) {
     else if (header === "Topplista hos OpenCritic") {
       buildTopList(result, header);
     }
+    //kod för att söka skriva ut sökresultat eller felmeddelande om inget hittades
     else {
       if(result.status === "No games found"){
         header = `Sökning på ${result.searchValue} gav inga träffar!`
