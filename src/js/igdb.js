@@ -43,7 +43,7 @@ body.addEventListener("click", function (e) {
     }
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
-    egsSaleApi("Årets Topplista hos OpenCritic", 'https://opencritic-api.p.rapidapi.com/game/hall-of-fame', 'opencritic-api.p.rapidapi.com');
+    egsSaleApi("Topplista hos OpenCritic", 'https://opencritic-api.p.rapidapi.com/game?platforms=pc&sort=score', 'opencritic-api.p.rapidapi.com');
   }
 
   /*När bakgrunden eller en stäng knapp clickas på när en recension eller spel är förstorat dölj det.*/
@@ -114,10 +114,13 @@ async function egsSaleApi(header, url, host, title, parentId) {
     else if (header === "Recension av") {
       reviewThis(result, parentId);
     }
-    else if (header === "Årets Topplista hos OpenCritic") {
+    else if (header === "Topplista hos OpenCritic") {
       buildTopList(result, header);
     }
     else {
+      if(result.status === "No games found"){
+        header = `Sökning på ${result.searchValue} gav inga träffar!`
+      }
       buildEgs(result, header);
     }
   } catch (error) {
@@ -350,7 +353,9 @@ function buildBigTopList(data) {
   text.appendChild(gameRelease);
   //formatering av betyg
   let scoreH3 = document.createElement("H3");
-  let scoreText = document.createTextNode("Rating " + data.topCriticScore + "/100 Poäng");
+  //Avrundar betyget
+  let scoreText = document.createTextNode("Rating " + Math.round(data.topCriticScore) + "/100 Poäng");
+
   scoreH3.appendChild(scoreText);
 
   let searchH3 = document.createElement("H5");
