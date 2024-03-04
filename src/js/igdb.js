@@ -25,8 +25,8 @@ body.addEventListener("click", function (e) {
     if (document.getElementById(resetReviewButton) !== null) {
       document.getElementById(resetReviewButton).innerHTML = "";
     }
-
-    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
+    // PAUSAD PGA SLUT
+    //egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
 
     checkIfOpen = 1;
     //review(thisId);
@@ -305,9 +305,7 @@ function buildBigTopList(data){
 
   img.src = "https://img.opencritic.com/" + data.images.banner.sm;
 
-  let shortReleaseDate = truncateReleaseDate(data.firstReleaseDate, 10);
-
-  let gameRelease = document.createTextNode("Lanserings Datum: " + shortReleaseDate);
+  let gameRelease = document.createTextNode("Lanserings Datum: " + data.firstReleaseDate.slice(0, 10));
   let text = document.createElement("p");
   text.appendChild(gameRelease);
 
@@ -346,10 +344,6 @@ function buildBigTopList(data){
   bigArticle.appendChild(searchBtn);
   bigReview.appendChild(bigArticle);
   //bigArticle.appendChild(reviewArticle);
-}
-
-function truncateReleaseDate(str, num) {
-  return str;
 }
 
 function builder(objectID) {

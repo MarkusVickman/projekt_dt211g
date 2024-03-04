@@ -31,6 +31,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 0px;
+    margin-bottom: -30px;
     max-width: 100%;
     //clear: left;
 }
@@ -53,8 +54,8 @@
     position: absolute;
     transform: translate(-50%, -50%);
     margin-left: 50%;
-    top: 160px;
-    width: 160px;
+    top: 150px;
+    width: 130px;
 } 
 
 #input-search{
@@ -124,7 +125,8 @@
     }
 
     #search-div{
-        width: 210px;
+        width: 220px;
+        top: 160px;
     } 
     
     #input-search{
@@ -149,7 +151,8 @@
     }
 
     #search-div{
-        width: 210px;
+        width: 220px;
+        top: 160px;
     } 
     
     #input-search{

@@ -1,0 +1,31 @@
+.article{
+    animation: article-load 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes article-load {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
+  }
+
+.big-article{
+    animation: big-article-load 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes big-article-load {
+    0% {
+        transform: translate(-50%, 120%);
+    }
+
+    100% {
+        transform: translate(-50%, 0%);
+    }
+  }
