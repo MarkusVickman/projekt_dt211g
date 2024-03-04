@@ -1,93 +1,63 @@
+//logotypen
 #logo {
     position: relative;
     height: 60px;
 }
 
-nav div:hover {
-    #logo{
-    height: 70px;
-    }
-    h4 {
-        font-size: 1.4em;
-    }
-}
-
-
-header {
-    background: #09294c;
-    height: 100px;
-    max-width: 100%;
-}
-
-header ul {
-    margin-top: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    max-width: 100%;
-    display: none;
-    position: absolute;
-    z-index: 1;
-}
-
-header li {
-    display: block;
-    list-style: none;
-}
-
+//Div med text "meny" och logotyp. fungerar som knapp
 nav div {
     position: absolute;
     right: 20px;
     top: 20px;
 }
 
-#close-menu{
+//vid hover av logo eller text förstoras logotyp och text
+nav div:hover {
+    #logo {
+        height: 70px;
+    }
+
+    h4 {
+        font-size: 1.4em;
+    }
+}
+
+//Header styling
+header {
+    background: #09294c;
+    height: 100px;
+    max-width: 100%;
+
+    ul {
+        margin-top: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 100%;
+        display: none;
+        position: absolute;
+        z-index: 1;
+    }
+
+    li {
+        display: block;
+        list-style: none;
+    }
+}
+
+//Styling av stänga menyn för att den ska visas rätt
+#close-menu {
     display: block;
 }
 
-
-
-
+//media querie för normalstora skärmar
 @media screen and (min-width: 800px) and (max-width: 2048px) {
 
     #logo {
         height: 80px;
     }
 
-    
-    nav div:hover {
-        #logo{
-        height: 80px;
-        }
-        h4 {
-            font-size: 1.4em;
-        }
-    }
-
-    header {
-        background: #09294c;
-        height: 0px;
-    }
-
-    header ul {
-        margin-top: 80px;
-        margin-left: auto;
-        margin-right: auto;
-        width: 390px;
-        display: block;
-        position: static;
-        z-index: 0;
-    }
-
-    header li {
-        margin-left: 12px;
-        display: inline-block;
-    }
-
-    header h4 {
-        display: none;
-    }
-
+    //Div med text "meny" och logotyp.
     nav div {
         position: absolute;
         right: 5%;
@@ -96,50 +66,51 @@ nav div {
         margin: 0;
     }
 
-    #close-menu{
-        display: none;
-    }
-
-}
-
-@media screen and (min-width: 2049px) {
-
-    #logo {
-        height: 80px;
-    }
-
-    
+    //Div med text "meny" och logotyp. tar bort hover
     nav div:hover {
-        #logo{
-        height: 80px;
+        #logo {
+            height: 80px;
         }
+
         h4 {
             font-size: 1.4em;
         }
     }
 
+    //Styling av meny för datorläget
     header {
-        background: #09294c;
         height: 0px;
+        ul {
+            margin-top: 80px;
+            width: 390px;
+            display: block;
+            position: static;
+            z-index: 0;
+        }
+
+        li {
+            margin-left: 12px;
+            display: inline-block;
+        }
+
+        //för att dölja menytext i storskärmsläge då den inte agerar knapp där
+        h4 {
+            display: none;
+        }
     }
 
-    header ul {
-        margin-top: 80px;
-        margin-left: auto;
-        margin-right: auto;
-        width: 390px;
-        display: block;
-        position: static;
-        z-index: 0;
-    }
-
-    header li {
-        margin-left: 12px;
-        display: inline-block;
-    }
-
-    header h4 {
+    //För att dölja stäng meny när användaren inte är i menyläge
+    #close-menu {
         display: none;
+    }
+
+}
+
+//Media querie för stora skärmar typ 4k<
+@media screen and (min-width: 2049px) {
+
+    #logo {
+        height: 80px;
     }
 
     nav div {
@@ -150,7 +121,40 @@ nav div {
         margin: 0;
     }
 
-    #close-menu{
+    nav div:hover {
+        #logo {
+            height: 80px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+        }
+    }
+
+    //Styling av meny för datorläget
+    header {
+        height: 0px;
+
+        ul {
+            margin-top: 80px;
+            width: 390px;
+            display: block;
+            position: static;
+            z-index: 0;
+        }
+
+        li {
+            margin-left: 12px;
+            display: inline-block;
+        }
+
+        h4 {
+            display: none;
+        }
+    }
+
+    //För att dölja stäng meny när användaren inte är i menyläge
+    #close-menu {
         display: none;
     }
 

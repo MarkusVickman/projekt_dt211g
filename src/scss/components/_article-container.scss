@@ -1,4 +1,4 @@
-
+//styling av rutorna för spel och ger den en vit ram med skuggning
 .article-container{
     border-width: 10px 10px 80px 10px;
     border-style: solid;
@@ -8,15 +8,14 @@
     text-align: left;
     background-color: rgb(255, 255, 255);
     overflow: scroll;
-
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    img{
+        width: 250px;
+        max-width: 100%;
+    }
 }
 
-.article-container img{
-    width: 250px;
-    max-width: 100%;
-}
-
+//vissa rubriker är väldigt långa därför är overflow scroll valt
 .article-h3{
     position: relative;
     top: -70px;
@@ -25,6 +24,7 @@
     max-width: 250px;
 }
 
+//bredd och centrering till artiklarna med spel
 .article{
     text-align: center;
     width: 250px;
@@ -36,6 +36,7 @@
     //clear: left;
 }
 
+//Hover ändrar färg lite och ger mer skuggning
 .article:hover{
     .article-container{
         border-color: #e6e6e6;
@@ -43,27 +44,24 @@
         box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
     }
 }
-  
+
+//En div med input-fält och sökknapp
 #search-div{
-    /*width: 100%;
-    height: 100%;
-    position: fixed;
-    background-color: rgba(255, 255, 255, 0.5);
-    top: 0;
-    display: none;*/
     position: absolute;
     transform: translate(-50%, -50%);
     margin-left: 50%;
     top: 150px;
-    width: 130px;
+    width: 210px;
 } 
 
+//Styling av inputfältet
 #input-search{
     width: 130px;
     height: 20px;
     font-weight: 600; font-size: 1.2em;
 }
 
+//Styling av de stora artiklarna
 .big-article{
     border-width: 20px;
     border-style: solid;
@@ -79,8 +77,22 @@
     top: 0px;
     z-index: 2;
     overflow: visible;
+    img {
+        max-width: 1000px;
+        width: 100%;
+    }
+    h3 {
+        text-align: center;
+        padding-top: 0px;
+        padding-bottom: 10px;
+        background-color: white;
+    }
+    a{
+        text-align: center;
+    }
 }
 
+//En transparant bakgrund som används som stänga knapp
 #big-article-background{
     background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
@@ -92,20 +104,11 @@
     display: none;
 }
 
-.big-article img {
-    max-width: 1000px;
-    width: 100%;
-}
-
-.big-article h3 {
-    text-align: center;
-    padding-top: 0px;
-    padding-bottom: 10px;
-    background-color: white;
-}
-
-.big-article a{
-    text-align: center;
+//Media querie för specifika fall då skärmar runt 300px orsakar problem
+@media screen and (max-width: 500px) {
+    #search-div, #input-search{
+        width: 130px;
+    } 
 }
 
 @media screen and (min-width: 800px) and (max-width: 2048px) {
@@ -136,7 +139,6 @@
 
 @media screen and (min-width: 2049px) {
     .article-container{
-
         border-width: 20px 20px 80px 20px;
     }
 

@@ -1,4 +1,4 @@
-
+//Standard styling av knappar
 .button {
   background-color: #FFFFFF;
   border: 0;
@@ -18,11 +18,13 @@
   display: block;
 }
 
+//Extra marginal till review-button
 .review-button{
   @extend .button;
   margin: 5px;
 }
 
+//Sökknapp extra styling
 #search-button{
   padding: 5px;
   display: inline-block;
@@ -34,12 +36,14 @@
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.8), 0 2px 4px 0 rgba(0, 0, 0, 0.8);
 }
 
+//stängknapp till stora artiklar extra styling
 .close-by-button{
   position: relative;
   top: -10px;
   float: right;
 }
 
+//Media queries som ändrar knapp display för att knapparna ska ligga sida vid sida.
 @media screen and (min-width: 800px) and (max-width: 2048px) {
   .button {
     display: inline-block;

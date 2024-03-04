@@ -1,9 +1,11 @@
-.article{
+//Animation för små artiklarna med spel. De "fade"ar in.
+.article {
     animation: article-load 3s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
 }
 
+//Animation för små artiklarna med spel. De "fade"ar in.
 @keyframes article-load {
     0% {
         opacity: 0;
@@ -12,14 +14,16 @@
     100% {
         opacity: 100;
     }
-  }
+}
 
-.big-article{
+//Animation för stora artiklarna med spel. De glider in nedifrån.
+.big-article {
     animation: big-article-load 3s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
 }
 
+//Animation för stora artiklarna med spel. De glider in nedifrån.
 @keyframes big-article-load {
     0% {
         transform: translate(-50%, 120%);
@@ -28,4 +32,4 @@
     100% {
         transform: translate(-50%, 0%);
     }
-  }
+}

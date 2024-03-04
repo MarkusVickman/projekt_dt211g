@@ -33,7 +33,7 @@ body.addEventListener("click", function (e) {
       document.getElementById(resetReviewButton).innerHTML = "";
     }
     // PAUSAD PGA SLUT
-    //egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
+    egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
 
     //checkIfOpen = 1;
     //review(thisId);

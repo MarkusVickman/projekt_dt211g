@@ -1,3 +1,9 @@
+//graderad bakgrundsfärg för att passa in till bilden
+body{
+    background: linear-gradient((#052241),(#3f6884),(#052241));
+}
+
+//styling av artikeln review som täcker hela sidan och har bakgrundsbild
 #review{
     background-image: url("../img/4096x4096.png");
     background-size:contain;
@@ -11,33 +17,13 @@
     margin-top: 30px;
 }
 
-#review h2{
-    margin-bottom: 20px;
-    margin-top: 90px;
-}
 
+
+/*
 .background-container{
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     max-width: 2000px;
-}
+}*/
 
-body{
-    background: linear-gradient((#052241),(#3f6884),(#052241));
-}
-
-@media screen and (min-width: 800px) and (max-width: 2048px) {
-    #review h2{
-        margin-top: 120px;
-    
-    }
-
-}
-
-@media screen and (min-width: 2049px) {
-    #review h2{
-        margin-top: 120px;
-
-    }
-}
