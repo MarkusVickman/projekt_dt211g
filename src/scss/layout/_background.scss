@@ -5,7 +5,10 @@ body{
 
 //styling av artikeln review som täcker hela sidan och har bakgrundsbild
 #review{
-    background-image: url("../img/4096x4096.png");
+    background-image: image-set(url("../img/4096x4096.png?as=webp&width=800"),
+    url("../img/4096x4096.png?as=jpeg&width=800"));
+
+    //background-image: url("../img/4096x4096.png");
     background-size:contain;
     background-repeat: no-repeat;
     height: 2000px;
@@ -27,3 +30,21 @@ body{
     max-width: 2000px;
 }*/
 
+
+//media querie för mellan stora skärmar
+@media screen and (min-width: 800px) and (max-width: 2048px) {
+    //styling av artikeln review som täcker hela sidan och har bakgrundsbild
+#review{
+    background-image: image-set(url("../img/4096x4096.png?as=webp&width=2000"),
+    url("../img/4096x4096.png?as=jpeg&width=2000"));
+}
+}
+
+//Media querie för stora skärmar typ 4k<
+@media screen and (min-width: 2049px) {
+    //styling av artikeln review som täcker hela sidan och har bakgrundsbild
+#review{
+    background-image: image-set(url("../img/4096x4096.png?as=webp&width=2000"),
+    url("../img/4096x4096.png?as=jpeg&width=2000"));
+}
+}
