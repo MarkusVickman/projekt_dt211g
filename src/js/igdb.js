@@ -15,10 +15,12 @@ let thisId;
 import { okey } from "./start";
 const okej = okey();
 
+
 //en eventlistener för hela body-elementet som med if-satser avgör vad som ska hända utifrån id eller class.
 body.addEventListener("click", function (e) {
   /*if-sats som visar en större informationsruta av ett spel. thisId används för att visa rätt element då titeln på target är samma som id på stora elementet. En vit bakgrund visas också och är ett alternativ till stäng.*/
   if (e.target.classList.contains('biginfo') /*&& checkIfOpen === 0*/) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
@@ -41,6 +43,7 @@ body.addEventListener("click", function (e) {
     if (window.innerWidth < 800) {
       menuUl.style.display = "none";
     }
+    document.getElementById("frame").style.display = "none";
     bigReview.innerHTML = "";
     buildReview.innerHTML = "";
     egsSaleApi("Topplista hos OpenCritic", 'https://opencritic-api.p.rapidapi.com/game?platforms=pc&sort=score', 'opencritic-api.p.rapidapi.com');
@@ -55,6 +58,7 @@ body.addEventListener("click", function (e) {
   /*om sökknappen och input används eller en knapp i topplistans resultat används görs en spelsökning hos epic games store. Dock har de lite få spel. Api information ink. sökordet skickas med till api-anropet*/
   if (e.target.id === "search-button" || e.target.id === "searchByReview") {
     let input;
+    document.getElementById("frame").style.display = "none";
     if (e.target.id === "search-button") {
       input = document.getElementById("input-search").value;
     }
@@ -76,6 +80,7 @@ body.addEventListener("click", function (e) {
 
   /*om knapp för kommande spel används skickas parametrar till ett api-anrop med.*/
   if (e.target.id === "comingsoon") {
+    document.getElementById("frame").style.display = "none";
     if (window.innerWidth < 800) {
       menuUl.style.display = "none";
     }
@@ -86,6 +91,7 @@ body.addEventListener("click", function (e) {
 
   /*om knapp för gratisspel används skickas parametrar till ett api-anrop med.*/
   if (e.target.id === "free") {
+    document.getElementById("frame").style.display = "none";
     if (window.innerWidth < 800) {
       menuUl.style.display = "none";
     }
@@ -123,6 +129,7 @@ async function egsSaleApi(header, url, host, title, parentId) {
         header = `Sökning på ${result.searchValue} gav inga träffar!`
       }
       buildEgs(result, header);
+      console.log(result);
     }
   } catch (error) {
     console.error(error);
@@ -175,7 +182,7 @@ function reviewThis(data, parentId) {
   let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
   scoreH3.appendChild(scoreText);
 
-    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " i Epic games store.");
+    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " recension.");
     let textUrl = document.createElement("a");
     textUrl.appendChild(reviewUrl);
     //För att alltid länk ska ges används en if-sats

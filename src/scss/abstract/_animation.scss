@@ -18,7 +18,7 @@
 
 //Animation för stora artiklarna med spel. De glider in nedifrån.
 .big-article {
-    animation: big-article-load 3s;
+    animation: big-article-load 2s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
 }
@@ -27,6 +27,12 @@
 @keyframes big-article-load {
     0% {
         transform: translate(-50%, 120%);
+        opacity: 0;
+    }
+
+    25% {
+        transform: translate(-50%, 120%);
+        opacity: 0;
     }
 
     100% {

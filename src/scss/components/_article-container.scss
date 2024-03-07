@@ -1,5 +1,21 @@
+//Div för startsidans text
+#frame {
+    padding: 3%;
+    font-size: 1.2em;
+    width: 800px;
+    line-height: 1.5em;
+    max-width: 94%;
+    text-align: center;
+    background-color: white;
+    font-weight: 500;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 200px;
+    border-radius: 1em;
+}
+
 //styling av rutorna för spel och ger den en vit ram med skuggning
-.article-container{
+.article-container {
     border-width: 10px 10px 80px 10px;
     border-style: solid;
     border-color: rgb(255, 255, 255);
@@ -9,23 +25,24 @@
     background-color: rgb(255, 255, 255);
     overflow: scroll;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    img{
+
+    img {
         width: 250px;
         max-width: 100%;
     }
 }
 
 //vissa rubriker är väldigt långa därför är overflow scroll valt
-.article-h3{
+.article-h3 {
     position: relative;
     top: -70px;
     overflow: scroll;
-    height:50px;
+    height: 50px;
     max-width: 250px;
 }
 
 //bredd och centrering till artiklarna med spel
-.article{
+.article {
     text-align: center;
     width: 250px;
     margin-left: auto;
@@ -37,8 +54,8 @@
 }
 
 //Hover ändrar färg lite och ger mer skuggning
-.article:hover{
-    .article-container{
+.article:hover {
+    .article-container {
         border-color: #e6e6e6;
         background-color: #e6e6e6;
         box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
@@ -46,23 +63,24 @@
 }
 
 //En div med input-fält och sökknapp
-#search-div{
+#search-div {
     position: absolute;
     transform: translate(-50%, -50%);
     margin-left: 50%;
     top: 150px;
     width: 210px;
-} 
+}
 
 //Styling av inputfältet
-#input-search{
+#input-search {
     width: 130px;
     height: 20px;
-    font-weight: 600; font-size: 1.2em;
+    font-weight: 600;
+    font-size: 1.2em;
 }
 
 //Styling av de stora artiklarna
-.big-article{
+.big-article {
     border-width: 20px;
     border-style: solid;
     border-color: white;
@@ -77,23 +95,26 @@
     top: 0px;
     z-index: 2;
     overflow: visible;
+
     img {
         max-width: 1000px;
         width: 100%;
     }
+
     h3 {
         text-align: center;
         padding-top: 0px;
         padding-bottom: 10px;
         background-color: white;
     }
-    a{
+
+    a {
         text-align: center;
     }
 }
 
 //En transparant bakgrund som används som stänga knapp
-#big-article-background{
+#big-article-background {
     background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
     max-width: 100%;
@@ -106,58 +127,78 @@
 
 //Media querie för specifika fall då skärmar runt 300px orsakar problem
 @media screen and (max-width: 500px) {
-    #search-div, #input-search{
+
+    #search-div,
+    #input-search {
         width: 130px;
-    } 
+    }
 }
 
 @media screen and (min-width: 800px) and (max-width: 2048px) {
-    .article-container{
+
+    //Div för startsidans text
+    #frame {
+        padding: 20px;
+        max-width: 90%;
+        margin-left: 50%;
+        transform: translate(-50%);
+    }
+
+    .article-container {
 
         border-width: 20px 20px 80px 20px;
     }
 
-    .article{   
+    .article {
         margin-left: 50px;
         display: inline-block;
         //float: left;
     }
 
-    .big-article{
+    .big-article {
         top: 50px;
     }
 
-    #search-div{
+    #search-div {
         width: 220px;
         top: 160px;
-    } 
-    
-    #input-search{
+    }
+
+    #input-search {
         width: 150px;
     }
 }
 
 @media screen and (min-width: 2049px) {
-    .article-container{
+
+    //Div för startsidans text
+    #frame {
+        padding: 20px;
+        max-width: 100%;
+        margin-left: 50%;
+        transform: translate(-50%);
+    }
+
+    .article-container {
         border-width: 20px 20px 80px 20px;
     }
 
-    .article{   
+    .article {
         margin-left: 85px;
         display: inline-block;
         //float: left;
     }
 
-    .big-article{
+    .big-article {
         top: 50px;
     }
 
-    #search-div{
+    #search-div {
         width: 220px;
         top: 160px;
-    } 
-    
-    #input-search{
+    }
+
+    #input-search {
         width: 150px;
     }
 }
