@@ -31,7 +31,7 @@ body.addEventListener("click", function (e) {
     egsSaleApi("Recension", `https://opencritic-api.p.rapidapi.com/game/search?criteria=${e.target.title}`, 'opencritic-api.p.rapidapi.com', e.target.title);
   }
 
-  /*if-sats som visar stor recention om en recension från toplistan används */
+  /*if-sats som visar stor recension om en recension från toplistan används */
   if (e.target.classList.contains('largerReview')) {
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
@@ -78,7 +78,7 @@ body.addEventListener("click", function (e) {
     egsSaleApi("Recension av", `https://opencritic-api.p.rapidapi.com/reviews/game/${e.target.id}?sort=popularity'`, 'opencritic-api.p.rapidapi.com', e.target.id, thisId.id);
   }
 
-  /*om knapp för kommande spel används skickas parametrar till ett api-anrop med.*/
+  /*om knapp för kommande spel används skickas argument till ett api-anrop med.*/
   if (e.target.id === "comingsoon") {
     document.getElementById("frame").style.display = "none";
     if (window.innerWidth < 800) {
@@ -89,7 +89,7 @@ body.addEventListener("click", function (e) {
     egsSaleApi("Epic Games Kommande Spel", 'https://epic-store-games.p.rapidapi.com/comingSoon?locale=sv&country=sv', 'epic-store-games.p.rapidapi.com');
   }
 
-  /*om knapp för gratisspel används skickas parametrar till ett api-anrop med.*/
+  /*om knapp för gratisspel används skickas argument till ett api-anrop med.*/
   if (e.target.id === "free") {
     document.getElementById("frame").style.display = "none";
     if (window.innerWidth < 800) {
@@ -133,68 +133,6 @@ async function egsSaleApi(header, url, host, title, parentId) {
     }
   } catch (error) {
     console.error(error);
-  }
-}
-
-/*En funktion som listar spel som matchar in på valt spel. utifrån listan kan sedan ett spel väljas.*/ 
-function chooseRightReview(data, title) {
-  let reviewArticle = document.getElementById(title + ":r");
-  let reviewHeader = document.createTextNode("Välj matchande recension");
-  let h2 = document.createElement("H2");
-  h2.appendChild(reviewHeader);
-  reviewArticle.appendChild(h2);
-  //för att kunna rensa listan med eventlisteners ett unikt id
-  let ulEl = document.createElement("ul");
-  ulEl.id = title + ":button";
-  //en loop för att bygga upp spellistan
-  for (let i = 0; i < data.length; i++) {
-    let listEl = document.createElement("li");
-    let gameName = document.createTextNode(data[i].name);
-    listEl.appendChild(gameName);
-    listEl.id = data[i].id;
-    listEl.classList.add("review-button");
-    ulEl.appendChild(listEl);
-  }
-  reviewArticle.appendChild(ulEl);
-}
-
-/*bygger recension för önskat spel*/
-function reviewThis(data, parentId) {
-  /*unikt id för att kunna resta listan med eventlistener*/ 
-  let reviewArticle = document.getElementById(parentId + ":r");
-  let reviewHeader = document.createTextNode("Recensioner");
-  let h2 = document.createElement("H2");
-  h2.appendChild(reviewHeader);
-  reviewArticle.appendChild(h2);
-  /*5 matchande recensioner listas med en for-loop*/ 
-  for (let i = 0; i < 5; i++) {
-
-    let gameHead = document.createTextNode(data[i].game.name);
-    let head = document.createElement("H3");
-    head.appendChild(gameHead);
-
-    let gameDescription = document.createTextNode(data[i].snippet);
-    let textReview = document.createElement("p");
-    textReview.appendChild(gameDescription);
-
-  //formatering av betyg
-  let scoreH3 = document.createElement("H3");
-  let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
-  scoreH3.appendChild(scoreText);
-
-    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " recension.");
-    let textUrl = document.createElement("a");
-    textUrl.appendChild(reviewUrl);
-    //För att alltid länk ska ges används en if-sats
-    if (data[i].externalUrl !== null) {
-      textUrl.setAttribute("href", data[i].externalUrl);
-    } else {
-      textUrl.setAttribute("href", "https://opencritic.com/");
-    }
-    reviewArticle.appendChild(head);
-    reviewArticle.appendChild(textReview);
-    reviewArticle.appendChild(scoreH3);
-    reviewArticle.appendChild(textUrl);
   }
 }
 
@@ -307,6 +245,68 @@ function fullscreenDiv(objectID) {
   bigArticle.appendChild(reviewArticle);
 }
 
+/*En funktion som listar spel som matchar in på valt spel. utifrån listan kan sedan ett spel väljas.*/ 
+function chooseRightReview(data, title) {
+  let reviewArticle = document.getElementById(title + ":r");
+  let reviewHeader = document.createTextNode("Välj matchande recension");
+  let h2 = document.createElement("H2");
+  h2.appendChild(reviewHeader);
+  reviewArticle.appendChild(h2);
+  //för att kunna rensa listan med eventlisteners ett unikt id
+  let ulEl = document.createElement("ul");
+  ulEl.id = title + ":button";
+  //en loop för att bygga upp spellistan
+  for (let i = 0; i < data.length; i++) {
+    let listEl = document.createElement("li");
+    let gameName = document.createTextNode(data[i].name);
+    listEl.appendChild(gameName);
+    listEl.id = data[i].id;
+    listEl.classList.add("review-button");
+    ulEl.appendChild(listEl);
+  }
+  reviewArticle.appendChild(ulEl);
+}
+
+/*bygger recension för önskat spel*/
+function reviewThis(data, parentId) {
+  /*unikt id för att kunna resta listan med eventlistener*/ 
+  let reviewArticle = document.getElementById(parentId + ":r");
+  let reviewHeader = document.createTextNode("Recensioner");
+  let h2 = document.createElement("H2");
+  h2.appendChild(reviewHeader);
+  reviewArticle.appendChild(h2);
+  /*5 matchande recensioner listas med en for-loop*/ 
+  for (let i = 0; i < 5; i++) {
+
+    let gameHead = document.createTextNode(data[i].game.name);
+    let head = document.createElement("H3");
+    head.appendChild(gameHead);
+
+    let gameDescription = document.createTextNode(data[i].snippet);
+    let textReview = document.createElement("p");
+    textReview.appendChild(gameDescription);
+
+  //formatering av betyg
+  let scoreH3 = document.createElement("H3");
+  let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
+  scoreH3.appendChild(scoreText);
+
+    let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " recension.");
+    let textUrl = document.createElement("a");
+    textUrl.appendChild(reviewUrl);
+    //För att alltid länk ska ges används en if-sats
+    if (data[i].externalUrl !== null) {
+      textUrl.setAttribute("href", data[i].externalUrl);
+    } else {
+      textUrl.setAttribute("href", "https://opencritic.com/");
+    }
+    reviewArticle.appendChild(head);
+    reviewArticle.appendChild(textReview);
+    reviewArticle.appendChild(scoreH3);
+    reviewArticle.appendChild(textUrl);
+  }
+}
+
 /*som funktionen ovan fast för topplistan från open critic här ligger for-loopen i denna funktion istället för i en separat funktion som i funktionen ovan*/ 
 function buildTopList(data, header) {
   let text = document.createTextNode(header);
@@ -346,6 +346,13 @@ function buildTopList(data, header) {
 
 /*skapar de större recensionerna till topplistan*/ 
 function buildBigTopList(data) {
+  console.log(data);
+
+  let reviewUrl = document.createTextNode("Länk till " + data.name + " recension.");
+  let textUrl = document.createElement("a");
+  textUrl.appendChild(reviewUrl);
+  textUrl.setAttribute("href", data.url);
+
   let gameHead = document.createTextNode(data.name);
   let head = document.createElement("H3");
   head.appendChild(gameHead);
@@ -383,6 +390,7 @@ function buildBigTopList(data) {
   bigArticle.appendChild(img);
   bigArticle.appendChild(text);
   bigArticle.appendChild(scoreH3);
+  bigArticle.appendChild(textUrl);
   bigArticle.appendChild(searchH3);
   bigArticle.appendChild(searchBtn);
   bigReview.appendChild(bigArticle);
