@@ -85,11 +85,12 @@
 
 //Styling av de stora artiklarna
 .big-article {
-    border-width: 20px;
+    border-top: 10px;
     border-style: solid;
     border-color: white;
     width: 1000px;
     max-width: 94%;
+    padding: 2%;
     height: auto;
     text-align: left;
     background-color: rgb(255, 255, 255);
@@ -115,6 +116,7 @@
 
     a {
         text-align: center;
+
     }
 }
 

@@ -75,6 +75,8 @@ body.addEventListener("click", function (e) {
 
   /*knappar för att välja matchande/önskad recension. om recensionsknappen trycks på skickas target.id med som sökning. Target.id är ett spel id hos opencritic*/ 
   if (e.target.classList.contains('review-button')) {
+    let resetReview = document.getElementById(thisId.id + ":r");
+    resetReview.innerHTML = "";
     egsSaleApi("Recension av", `https://opencritic-api.p.rapidapi.com/reviews/game/${e.target.id}?sort=popularity'`, 'opencritic-api.p.rapidapi.com', e.target.id, thisId.id);
   }
 
@@ -273,8 +275,17 @@ function reviewThis(data, parentId) {
   let h2 = document.createElement("H2");
   h2.appendChild(reviewHeader);
   reviewArticle.appendChild(h2);
+
+//För att inte ge error om färre än 5 datapunkter är tillgängliga
+  let loopCount;
+  if (data.length > 5){
+    loopCount = 5;
+  }
+    else {
+      loopCount = data.length;
+    }
   /*5 matchande recensioner listas med en for-loop*/ 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < loopCount; i++) {
 
     let gameHead = document.createTextNode(data[i].game.name);
     let head = document.createElement("H3");
@@ -300,8 +311,8 @@ function reviewThis(data, parentId) {
     }
     reviewArticle.appendChild(head);
     reviewArticle.appendChild(textReview);
-    reviewArticle.appendChild(scoreH3);
     reviewArticle.appendChild(textUrl);
+    reviewArticle.appendChild(scoreH3);
   }
 }
 
