@@ -129,7 +129,6 @@ async function egsSaleApi(header, url, host, title, parentId) {
         header = `Sökning på ${result.searchValue} gav inga träffar!`
       }
       buildEgs(result, header);
-      console.log(result);
     }
   } catch (error) {
     console.error(error);
@@ -140,7 +139,6 @@ async function egsSaleApi(header, url, host, title, parentId) {
 if else används för att rätt data ska byggas in då det är skilja apier och data. 2 funktioner initieras härifrån, eftersom de 
 initieras för varje loop kan unika titlar och id:n skapas för varje spel i stort och litet läge och på så sätt särskilja dem åt*/
 function buildEgs(data, header) {
-  //console.log(data);
   let text = document.createTextNode(header);
   let h2 = document.createElement("H2");
   h2.appendChild(text);
@@ -346,8 +344,6 @@ function buildTopList(data, header) {
 
 /*skapar de större recensionerna till topplistan*/ 
 function buildBigTopList(data) {
-  console.log(data);
-
   let reviewUrl = document.createTextNode("Länk till " + data.name + " recension.");
   let textUrl = document.createElement("a");
   textUrl.appendChild(reviewUrl);
