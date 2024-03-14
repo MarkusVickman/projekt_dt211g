@@ -33,6 +33,7 @@ body.addEventListener("click", function (e) {
 
   /*if-sats som visar stor recension om en recension från toplistan används */
   if (e.target.classList.contains('largerReview')) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     thisId = document.getElementById(e.target.title);
     thisId.style.display = "block";
     closeByBackground.style.display = "block";
@@ -73,7 +74,7 @@ body.addEventListener("click", function (e) {
     }
   }
 
-  /*knappar för att välja matchande/önskad recension. om recensionsknappen trycks på skickas target.id med som sökning. Target.id är ett spel id hos opencritic*/ 
+  /*knappar för att välja matchande/önskad recension. om recensionsknappen trycks på skickas target.id med som sökning. Target.id är ett spel id hos opencritic*/
   if (e.target.classList.contains('review-button')) {
     let resetReview = document.getElementById(thisId.id + ":r");
     resetReview.innerHTML = "";
@@ -115,7 +116,7 @@ async function egsSaleApi(header, url, host, title, parentId) {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    /*med hjälp av if-satser och rubrikerna som ska användas identifieras olika anrop. Argument skickas med utifrån behov*/ 
+    /*med hjälp av if-satser och rubrikerna som ska användas identifieras olika anrop. Argument skickas med utifrån behov*/
     if (header === "Recension") {
       chooseRightReview(result, title);
     }
@@ -127,7 +128,7 @@ async function egsSaleApi(header, url, host, title, parentId) {
     }
     //kod för att söka skriva ut sökresultat eller felmeddelande om inget hittades
     else {
-      if(result.status === "No games found"){
+      if (result.status === "No games found") {
         header = `Sökning på ${result.searchValue} gav inga träffar!`
       }
       buildEgs(result, header);
@@ -198,7 +199,7 @@ function builder(objectID) {
   container.title = objectID.title;
 }
 
-/*här skapas de större elementen för spel och recensioner*/ 
+/*här skapas de större elementen för spel och recensioner*/
 function fullscreenDiv(objectID) {
   let gameHead = document.createTextNode(objectID.title);
   let head = document.createElement("H3");
@@ -245,7 +246,7 @@ function fullscreenDiv(objectID) {
   bigArticle.appendChild(reviewArticle);
 }
 
-/*En funktion som listar spel som matchar in på valt spel. utifrån listan kan sedan ett spel väljas.*/ 
+/*En funktion som listar spel som matchar in på valt spel. utifrån listan kan sedan ett spel väljas.*/
 function chooseRightReview(data, title) {
   let reviewArticle = document.getElementById(title + ":r");
   let reviewHeader = document.createTextNode("Välj matchande recension");
@@ -269,22 +270,22 @@ function chooseRightReview(data, title) {
 
 /*bygger recension för önskat spel*/
 function reviewThis(data, parentId) {
-  /*unikt id för att kunna resta listan med eventlistener*/ 
+  /*unikt id för att kunna resta listan med eventlistener*/
   let reviewArticle = document.getElementById(parentId + ":r");
   let reviewHeader = document.createTextNode("Recensioner");
   let h2 = document.createElement("H2");
   h2.appendChild(reviewHeader);
   reviewArticle.appendChild(h2);
 
-//För att inte ge error om färre än 5 datapunkter är tillgängliga
+  //För att inte ge error om färre än 5 datapunkter är tillgängliga
   let loopCount;
-  if (data.length > 5){
+  if (data.length > 5) {
     loopCount = 5;
   }
-    else {
-      loopCount = data.length;
-    }
-  /*5 matchande recensioner listas med en for-loop*/ 
+  else {
+    loopCount = data.length;
+  }
+  /*5 matchande recensioner listas med en for-loop*/
   for (let i = 0; i < loopCount; i++) {
 
     let gameHead = document.createTextNode(data[i].game.name);
@@ -295,10 +296,10 @@ function reviewThis(data, parentId) {
     let textReview = document.createElement("p");
     textReview.appendChild(gameDescription);
 
-  //formatering av betyg
-  let scoreH3 = document.createElement("H3");
-  let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
-  scoreH3.appendChild(scoreText);
+    //formatering av betyg
+    let scoreH3 = document.createElement("H3");
+    let scoreText = document.createTextNode("Rating " + data[i].score + "/100 Poäng");
+    scoreH3.appendChild(scoreText);
 
     let reviewUrl = document.createTextNode("Länk till " + data[i].Outlet.name + " recension.");
     let textUrl = document.createElement("a");
@@ -316,13 +317,13 @@ function reviewThis(data, parentId) {
   }
 }
 
-/*som funktionen ovan fast för topplistan från open critic här ligger for-loopen i denna funktion istället för i en separat funktion som i funktionen ovan*/ 
+/*som funktionen ovan fast för topplistan från open critic här ligger for-loopen i denna funktion istället för i en separat funktion som i funktionen ovan*/
 function buildTopList(data, header) {
   let text = document.createTextNode(header);
   let h2 = document.createElement("H2");
   h2.appendChild(text);
   buildReview.appendChild(h2);
-/*loopar igenom en array av object för att lista upp hela topplistan*/ 
+  /*loopar igenom en array av object för att lista upp hela topplistan*/
   for (let i = 0; i < (data.length); i++) {
     let gameHeader = document.createTextNode(data[i].name);
     let h3 = document.createElement("H3");
@@ -353,7 +354,7 @@ function buildTopList(data, header) {
   }
 }
 
-/*skapar de större recensionerna till topplistan*/ 
+/*skapar de större recensionerna till topplistan*/
 function buildBigTopList(data) {
   let reviewUrl = document.createTextNode("Länk till " + data.name + " recension.");
   let textUrl = document.createElement("a");
@@ -375,12 +376,11 @@ function buildBigTopList(data) {
   text.appendChild(gameRelease);
   //formatering av betyg
   let scoreH3 = document.createElement("H3");
-  //Avrundar betyget
+  //Avrundar betyget och lägger till betyget som header.
   let scoreText = document.createTextNode("Rating " + Math.round(data.topCriticScore) + "/100 Poäng");
-
   scoreH3.appendChild(scoreText);
-
   let searchH3 = document.createElement("H5");
+  //Varnande text
   let searchText = document.createTextNode("Sök spelet i Epic Games Store. Det är tyvärr ganska vanligt att de senaste spelen inte finns med i deras butik.");
   searchH3.appendChild(searchText);
 
@@ -391,7 +391,14 @@ function buildBigTopList(data) {
   searchBtn.id = "searchByReview";
   searchBtn.title = data.name;
 
+  //knapp byggs in för att kunna stänga
+  let closeBtn = document.createElement("button");
+  let closeBtnText = document.createTextNode("Stäng");
+  closeBtn.appendChild(closeBtnText);
+  closeBtn.classList.add("close-by-button", "button");
+
   bigArticle.id = data.name;
+  bigArticle.appendChild(closeBtn);
   bigArticle.classList.add("big-article");
   bigArticle.appendChild(head);
   bigArticle.appendChild(img);

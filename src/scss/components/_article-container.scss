@@ -25,7 +25,7 @@
     height: auto;
     text-align: left;
     background-color: rgb(255, 255, 255);
-    overflow: scroll;
+    overflow: hidden;
     box-shadow: variables.$shadow;
 
     img {
@@ -38,7 +38,6 @@
 .article-h3 {
     position: relative;
     top: -70px;
-    overflow: scroll;
     height: 50px;
     max-width: 250px;
 }
